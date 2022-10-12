@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="../../.gradle/caches/transforms-3/5d666d306352f7fdca8df50525096bc2/transformed/appcompat-1.5.1/res/layout/support_simple_spinner_dropdown_item.xml" value="0.28177083333333336" />
+        <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1145" />
+        <entry key="app/src/main/res/drawable/boarder.xml" value="0.1145" />
+        <entry key="app/src/main/res/drawable/ic_baseline_delete_24.xml" value="0.1145" />
+        <entry key="app/src/main/res/drawable/ic_baseline_edit_24.xml" value="0.1145" />
+        <entry key="app/src/main/res/drawable/ic_baseline_error_24.xml" value="0.1145" />
+        <entry key="app/src/main/res/drawable/ic_baseline_filter_alt_24.xml" value="0.1725" />
+        <entry key="app/src/main/res/drawable/ic_baseline_help_outline_24.xml" value="0.1145" />
+        <entry key="app/src/main/res/drawable/ic_baseline_menu_open_24.xml" value="0.1145" />
+        <entry key="app/src/main/res/drawable/ic_baseline_qr_code_2_24.xml" value="0.1725" />
+        <entry key="app/src/main/res/drawable/ic_baseline_save_24.xml" value="0.1725" />
+        <entry key="app/src/main/res/drawable/ic_baseline_search_24.xml" value="0.1145" />
+        <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.1145" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.2625" />
+        <entry key="app/src/main/res/layout/app_bar_main.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/content_main.xml" value="0.2625" />
+        <entry key="app/src/main/res/layout/fragment_addcliente.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_addproducto.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_addproducto2.xml" value="0.25052083333333336" />
+        <entry key="app/src/main/res/layout/fragment_addproductopart1.xml" value="0.25052083333333336" />
+        <entry key="app/src/main/res/layout/fragment_addproductopart2.xml" value="0.25052083333333336" />
+        <entry key="app/src/main/res/layout/fragment_editcliente.xml" value="0.28177083333333336" />
+        <entry key="app/src/main/res/layout/fragment_editproducto.xml" value="0.28177083333333336" />
+        <entry key="app/src/main/res/layout/fragment_editproducto2.xml" value="0.28177083333333336" />
+        <entry key="app/src/main/res/layout/fragment_filtrosclientes.xml" value="0.28177083333333336" />
+        <entry key="app/src/main/res/layout/fragment_filtrosproductos.xml" value="0.2712962962962963" />
+        <entry key="app/src/main/res/layout/fragment_fragmente_addproductopart1.xml" value="0.23333333333333334" />
+        <entry key="app/src/main/res/layout/fragment_gallery.xml" value="0.2625" />
+        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.2625" />
+        <entry key="app/src/main/res/layout/fragment_listaclientes.xml" value="0.28177083333333336" />
+        <entry key="app/src/main/res/layout/fragment_listaproductos.xml" value="0.17962962962962964" />
+        <entry key="app/src/main/res/layout/fragment_scrolling.xml" value="0.2625" />
+        <entry key="app/src/main/res/layout/fragment_slideshow.xml" value="0.2625" />
+        <entry key="app/src/main/res/layout/layout_itemlist.xml" value="0.2712962962962963" />
+        <entry key="app/src/main/res/layout/nav_header_main.xml" value="0.2625" />
+        <entry key="app/src/main/res/layout/navheader.xml" value="0.2625" />
+        <entry key="app/src/main/res/layout/rvitem_cliente.xml" value="0.2712962962962963" />
+        <entry key="app/src/main/res/layout/rvitem_producto.xml" value="0.2609805924412666" />
+        <entry key="app/src/main/res/layout/switch_item.xml" value="0.2625" />
+        <entry key="app/src/main/res/menu/activity_main_drawer.xml" value="0.1" />
+        <entry key="app/src/main/res/menu/main.xml" value="0.2625" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>

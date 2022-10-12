@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.productos.fragment_addproductopart1">
+
+    <ScrollView
+        android:id="@+id/svBotonesMant"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        >
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginBottom="20dp">
+
+            <com.google.android.material.button.MaterialButtonToggleGroup
+                android:id="@+id/tgAddP1Clase"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:singleSelection="true"
+                android:layout_marginTop="10dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                >
+
+                <Button
+                    android:id="@+id/btAddP1Bien"
+                    style="@style/Widget.App.Button.OutlinedButton.IconOnly"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Bien"
+                    app:icon="@drawable/ic_baseline_fax_24" />
+
+                <Button
+                    android:id="@+id/btAddP1Servicio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Servicio"
+                    app:icon="@drawable/ic_baseline_design_services_24"
+                    style="@style/Widget.App.Button.OutlinedButton.IconOnly"
+                    />
+            </com.google.android.material.button.MaterialButtonToggleGroup>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/txtbarcodely"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                app:layout_constraintTop_toBottomOf="@id/tgAddP1Clase"
+                app:startIconDrawable="@drawable/ic_baseline_qr_code_2_24"
+                app:startIconContentDescription="Código de Barra"
+                android:hint="Código"
+                app:counterEnabled="true"
+                app:counterMaxLength="50"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/txtbbarcode"
+                    android:maxLength="50"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/txtdescly"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                app:counterEnabled="true"
+                app:counterMaxLength="500"
+                app:layout_constraintTop_toBottomOf="@id/txtbarcodely"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:hint="Descripción">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/txtdesc"
+                    android:inputType="textMultiLine"
+                    android:lines="2"
+                    android:maxLength="500"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cvAddPPrecios"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintTop_toBottomOf="@id/txtdescly"
+                >
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/lblCosto"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:hint="Costo">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/txtAddPCosto"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="numberDecimal"
+                        android:ems="2"
+                        app:layout_constraintTop_toBottomOf="@+id/lblCosto"
+                        app:layout_constraintStart_toStartOf="parent"
+                        />
+                </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/lblPVP"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginLeft="10dp"
+                    android:hint="PVP Unidad"
+                    app:layout_constraintBaseline_toBaselineOf="@id/lblCosto"
+                    app:layout_constraintStart_toEndOf="@id/lblCosto"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    >
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/txtAddPPVP"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="numberDecimal"
+                        android:ems="2"
+                        app:layout_constraintBaseline_toBaselineOf="@id/txtAddPCosto"
+                        app:layout_constraintStart_toEndOf="@+id/txtAddPCosto"
+                        />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/lblPvPMay"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginLeft="10dp"
+                    app:layout_constraintBaseline_toBaselineOf="@id/lblPVP"
+                    app:layout_constraintStart_toEndOf="@+id/lblPVP"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:hint="PVP Mayorista">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/txtAddPPvpM"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="numberDecimal"
+                        android:ems="2"
+                        app:layout_constraintBaseline_toBaselineOf="@id/txtAddPPVP"
+                        app:layout_constraintStart_toEndOf="@+id/txtAddPPVP"
+                        />
+                </com.google.android.material.textfield.TextInputLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:id="@+id/cbAddPImpuesto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:hint="Impuesto"
+                app:layout_constraintTop_toBottomOf="@+id/cvAddPPrecios"
+                app:layout_constraintStart_toStartOf="parent"
+                >
+
+                <AutoCompleteTextView
+                    android:id="@+id/actvAddImpuesto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="none"></AutoCompleteTextView>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                    android:id="@+id/cbAddCat"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:hint="Categoría"
+                    app:layout_constraintTop_toBottomOf="@+id/cbAddPImpuesto"
+                    app:layout_constraintStart_toStartOf="parent"
+                    >
+
+                    <AutoCompleteTextView
+                        android:id="@+id/actvAddCat"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="none"></AutoCompleteTextView>
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                    android:id="@+id/cbAddSubCat"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:hint="SubCategoría"
+                    app:layout_constraintTop_toBottomOf="@+id/cbAddCat"
+                    app:layout_constraintStart_toStartOf="parent"
+                    >
+
+                    <AutoCompleteTextView
+                        android:id="@+id/actvAddSubCat"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="none"></AutoCompleteTextView>
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

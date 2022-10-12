@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.productos.fragment_addproductopart2">
+
+    <ScrollView
+        android:id="@+id/svBotonesMant"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        >
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="20dp">
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:id="@+id/cbUnidad"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:hint="Unidad de Medida"
+            >
+
+            <AutoCompleteTextView
+                android:id="@+id/actvAddUnidad"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none"></AutoCompleteTextView>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cvAddPStock"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toBottomOf="@+id/cbUnidad"
+        >
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/lblStockMin"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:hint="Stock Min">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/txtAddPStockMin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"
+                android:ems="2"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/lblStockMax"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="10dp"
+            android:hint="Stock Máx"
+            app:layout_constraintBaseline_toBaselineOf="@id/lblStockMin"
+            app:layout_constraintStart_toEndOf="@id/lblStockMin"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/txtAddPStockMax"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"
+                android:ems="2"
+                app:layout_constraintBaseline_toBaselineOf="@id/txtAddPStockMin"
+                app:layout_constraintStart_toEndOf="@+id/txtAddPStockMin"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:id="@+id/cbAddEnvase"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:hint="Envase"
+        app:layout_constraintTop_toBottomOf="@+id/cvAddPStock"
+        app:layout_constraintStart_toStartOf="parent"
+        >
+
+        <AutoCompleteTextView
+            android:id="@+id/actvAddEnvase"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="none"></AutoCompleteTextView>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:id="@+id/cbAddBodega"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginBottom="10dp"
+        android:hint="Bodega"
+        app:layout_constraintTop_toBottomOf="@+id/cbAddEnvase"
+        app:layout_constraintStart_toStartOf="parent"
+        >
+
+        <AutoCompleteTextView
+            android:id="@+id/actvAddBodega"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="none"></AutoCompleteTextView>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:id="@+id/cbEstado"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:hint="Estado del producto"
+            app:layout_constraintTop_toBottomOf="@+id/cbAddBodega"
+            app:layout_constraintStart_toStartOf="parent"
+            >
+
+            <AutoCompleteTextView
+                android:id="@+id/actvEditEstado"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none"></AutoCompleteTextView>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </ScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_listaClientes">
+
+
+    <fragment
+        android:id="@+id/nav_listaProductos"
+        android:name="uteq.solutions.navdrawer.ui.productos.fragment_ListaProductos"
+        android:label="Productos"
+        tools:layout="@layout/fragment_listaproductos" />
+
+    <fragment
+        android:id="@+id/nav_AddProducto"
+        android:name="uteq.solutions.navdrawer.ui.productos.fragment_addproducto"
+        android:label="Nuevo Producto"
+        tools:layout="@layout/fragment_addproducto" />
+
+    <fragment
+        android:id="@+id/nav_AddCliente"
+        android:name="uteq.solutions.navdrawer.ui.clientes.fragment_addcliente"
+        android:label="Nuevo Cliente"
+        tools:layout="@layout/fragment_addcliente" />
+
+    <fragment
+        android:id="@+id/nav_EditProducto"
+        android:name="uteq.solutions.navdrawer.ui.productos.fragment_editproducto"
+        android:label="Editar Producto"
+        tools:layout="@layout/fragment_editproducto">
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_EditCliente"
+        android:name="uteq.solutions.navdrawer.ui.clientes.fragment_editcliente"
+        android:label="Editar Producto"
+        tools:layout="@layout/fragment_editcliente">
+    </fragment>
+
+
+
+    <fragment
+        android:id="@+id/nav_listaClientes"
+        android:name="uteq.solutions.navdrawer.ui.clientes.fragment_ListaClientes"
+        android:label="Lista de Clientes"
+        tools:layout="@layout/fragment_listaproductos" />
+
+
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="uteq.solutions.navdrawer.ui.home.HomeFragment"
+        android:label="Pantalla Principal"
+        tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/nav_slideshow"
+        android:name="uteq.solutions.navdrawer.ui.slideshow.SlideshowFragment"
+        android:label="@string/menu_slideshow"
+        tools:layout="@layout/fragment_slideshow" />
+</navigation>
