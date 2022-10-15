@@ -6,6 +6,7 @@
         <entry key="../../.gradle/caches/transforms-3/5d666d306352f7fdca8df50525096bc2/transformed/appcompat-1.5.1/res/layout/support_simple_spinner_dropdown_item.xml" value="0.28177083333333336" />
         <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1145" />
         <entry key="app/src/main/res/drawable/boarder.xml" value="0.1145" />
+        <entry key="app/src/main/res/drawable/ic_baseline_close_24.xml" value="0.1725" />
         <entry key="app/src/main/res/drawable/ic_baseline_delete_24.xml" value="0.1145" />
         <entry key="app/src/main/res/drawable/ic_baseline_edit_24.xml" value="0.1145" />
         <entry key="app/src/main/res/drawable/ic_baseline_error_24.xml" value="0.1145" />
@@ -19,14 +20,18 @@
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.2625" />
         <entry key="app/src/main/res/layout/app_bar_main.xml" value="0.1" />
         <entry key="app/src/main/res/layout/content_main.xml" value="0.2625" />
-        <entry key="app/src/main/res/layout/fragment_addcliente.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/fragment_addproducto.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_addcliente.xml" value="0.26149131767109296" />
+        <entry key="app/src/main/res/layout/fragment_addproducto.xml" value="0.26149131767109296" />
         <entry key="app/src/main/res/layout/fragment_addproducto2.xml" value="0.25052083333333336" />
         <entry key="app/src/main/res/layout/fragment_addproductopart1.xml" value="0.25052083333333336" />
         <entry key="app/src/main/res/layout/fragment_addproductopart2.xml" value="0.25052083333333336" />
+        <entry key="app/src/main/res/layout/fragment_busqclientes.xml" value="0.2712962962962963" />
+        <entry key="app/src/main/res/layout/fragment_detallefactura.xml" value="0.28177083333333336" />
         <entry key="app/src/main/res/layout/fragment_editcliente.xml" value="0.28177083333333336" />
         <entry key="app/src/main/res/layout/fragment_editproducto.xml" value="0.28177083333333336" />
         <entry key="app/src/main/res/layout/fragment_editproducto2.xml" value="0.28177083333333336" />
+        <entry key="app/src/main/res/layout/fragment_encabezadofactura.xml" value="0.28177083333333336" />
+        <entry key="app/src/main/res/layout/fragment_factura.xml" value="0.2712962962962963" />
         <entry key="app/src/main/res/layout/fragment_filtrosclientes.xml" value="0.28177083333333336" />
         <entry key="app/src/main/res/layout/fragment_filtrosproductos.xml" value="0.2712962962962963" />
         <entry key="app/src/main/res/layout/fragment_fragmente_addproductopart1.xml" value="0.23333333333333334" />

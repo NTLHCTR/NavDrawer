@@ -6,6 +6,7 @@ public class GlobalInfo {
 
     public static final String URL_ActualizaEstadoCliente="https://api.uealecpeterson.net/public/clientes/setestado";
     public static final String URL_ListaClientes="https://api.uealecpeterson.net/public/clientes/search";
+    public static final String URL_BusqClientes="https://api.uealecpeterson.net/public/clientes/searchtoselect";
     public static final String URL_ListaMenu="https://api.uealecpeterson.net/public/listamenu";
     public static final String URL_EditCliente="https://api.uealecpeterson.net/public/clientes/editar/";
     public static final String URL_GetCliente="https://api.uealecpeterson.net/public/clientes/get/";

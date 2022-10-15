@@ -3,8 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_listaClientes">
+    app:startDestination="@+id/nav_Facturacion">
 
+    <fragment
+        android:id="@+id/nav_Facturacion"
+        android:name="uteq.solutions.navdrawer.ui.facturacion.fragment_Factura"
+        android:label="Facturación"
+        tools:layout="@layout/fragment_factura" />
 
     <fragment
         android:id="@+id/nav_listaProductos"

@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.facturacion.fragment_Factura">
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tab_layoutFactura"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Parte 1"
+            />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Parte 2"
+            />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Parte 3"
+            />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Parte 4"
+            />
+
+    </com.google.android.material.tabs.TabLayout>
+
+    <FrameLayout
+        android:id="@+id/frameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/lycontentTotales"
+        app:layout_constraintTop_toBottomOf="@+id/tab_layoutFactura"
+        >
+    </FrameLayout>
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/lycontentTotales"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#1596be"
+            app:layout_constraintTop_toBottomOf="@id/frameLayout"
+            app:layout_constraintBottom_toBottomOf="parent"
+            >
+
+
+
+            <TextView
+                android:id="@+id/lblheadTotales"
+                android:textStyle="bold"
+                android:textAlignment="viewEnd"
+                android:textSize="16sp"
+                android:textColor="@color/white"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="5dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/lblTotalHead"
+                app:layout_constraintTop_toTopOf="parent"
+                android:text="TOTALES: ">
+            </TextView>
+
+
+            <TextView
+                android:id="@+id/lblTotalHead"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:textColor="@color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
+                app:layout_constraintStart_toEndOf="@+id/lblheadTotales"
+                app:layout_constraintEnd_toStartOf="@+id/imgarrow"
+                app:layout_constraintTop_toTopOf="parent"
+                android:text="1001.00">
+            </TextView>
+
+            <ImageView
+                android:id="@+id/imgarrow"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:src="@drawable/ic_baseline_arrow_drop_up_24"
+                app:layout_constraintStart_toEndOf="@+id/lblTotalHead"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/lblTitulo8"
+                >
+
+            </ImageView>
+
+            <TextView
+                android:id="@+id/lblTitulo8"
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                app:layout_constraintTop_toBottomOf="@+id/lblheadTotales"
+                android:text="">
+            </TextView>
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/lytotaleshidden"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#2596be"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="24dp"
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@+id/lblTitulo8"
+                >
+
+                <TextView
+                    android:id="@+id/lblTitulo1"
+                    android:layout_width="0dp"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/white"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/lblSubTotalIVA0"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:text="SubTotal IVA 0%">
+                </TextView>
+
+                <TextView
+                    android:id="@+id/lblSubTotalIVA0"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:textColor="@color/white"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    app:layout_constraintStart_toEndOf="@+id/lblTitulo1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:text="1001.00">
+                </TextView>
+
+                <TextView
+                    android:id="@+id/lblTitulo2"
+                    android:layout_width="0dp"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/white"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    app:layout_constraintTop_toBottomOf="@+id/lblTitulo1"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/lblSubTotalIVA12"
+                    android:text="SubTotal IVA 12%">
+                </TextView>
+
+                <TextView
+                    android:id="@+id/lblSubTotalIVA12"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:textColor="@color/white"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    app:layout_constraintStart_toEndOf="@+id/lblTitulo2"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/lblSubTotalIVA0"
+                    android:text="1001.00">
+                </TextView>
+
+
+                <TextView
+                    android:id="@+id/lblTitulo3"
+                    android:layout_width="0dp"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:textColor="@color/white"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:textAlignment="textEnd"
+                    app:layout_constraintTop_toBottomOf="@+id/lblTitulo2"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/lblIva12"
+                    android:text="IVA 12%">
+                </TextView>
+
+                <TextView
+                    android:id="@+id/lblIva12"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:textColor="@color/white"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    app:layout_constraintStart_toEndOf="@+id/lblTitulo3"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/lblSubTotalIVA12"
+                    android:text="12.00">
+                </TextView>
+
+
+                <TextView
+                    android:id="@+id/lblTitulo4"
+                    android:layout_width="0dp"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/white"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    app:layout_constraintTop_toBottomOf="@+id/lblTitulo3"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/lblTotalAPagar"
+                    android:text="Total de Pagar: ">
+                </TextView>
+
+                <TextView
+                    android:id="@+id/lblTotalAPagar"
+                    android:textStyle="bold"
+
+                    android:textSize="16sp"
+                    android:textColor="@color/white"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    app:layout_constraintStart_toEndOf="@+id/lblTitulo4"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/lblIva12"
+                    android:text="12.00">
+                </TextView>
+
+                <TextView
+                    android:id="@+id/lblTitulo5"
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp"
+                    app:layout_constraintTop_toBottomOf="@+id/lblTitulo4"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/lblTotalAPagar"
+                    android:text="">
+                </TextView>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ProgressBar
+        android:id="@+id/idLoadingPB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+

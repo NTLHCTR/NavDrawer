@@ -22,6 +22,15 @@ public class clsProducto {
 
     }
 
+    public clsProducto(String _desc, String _categoria, Double _valor, Integer _ID) {
+        descripcion =  _desc;
+        categoria= _categoria;
+        valor = _valor;
+        ID = _ID;
+
+
+    }
+
     public static ArrayList<clsProducto> JsonObjectsBuild(JSONArray datos) throws JSONException {
         ArrayList<clsProducto> productos = new ArrayList<>();
         for (int i = 0; i < datos.length(); i++) {

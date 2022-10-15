@@ -60,6 +60,13 @@ public class HTTPErrorResponseDialog implements  Response.ErrorListener{
             } catch(JSONException e){
                 e.printStackTrace();
             }
+        }else{
+            new MaterialAlertDialogBuilder(cntx)
+                    .setTitle("Error")
+                    .setIcon(R.drawable.ic_baseline_error_24)
+                    .setMessage(error.getMessage().toString())
+                    .setPositiveButton("Ok", null)
+                    .show();
         }
 
         if(pb!=null)        pb.setVisibility(View.GONE);

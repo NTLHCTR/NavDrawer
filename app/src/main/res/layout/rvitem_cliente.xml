@@ -25,7 +25,7 @@
                android:layout_marginLeft="5dp"
                 android:text="Nombre"
                 android:textStyle="bold"
-                android:textSize="14sp"
+                android:textSize="12sp"
                 android:textColor="#000000"
                 app:layout_constraintStart_toEndOf="@+id/imgUsr"
                app:layout_constraintEnd_toEndOf="parent"
@@ -46,7 +46,7 @@
                 app:layout_constraintEnd_toStartOf="@id/rvitem_cliente_tipo"
                 android:text="RUC 12051273366001"
                 android:textAlignment="viewStart"
-                android:textSize="12sp"
+                android:textSize="10sp"
                 android:textStyle="bold" />
 
                 <TextView
@@ -54,11 +54,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
+                    android:layout_marginRight="5dp"
                     app:layout_constraintTop_toBottomOf="@id/rvitem_cliente_nombre"
                     app:layout_constraintStart_toEndOf="@id/rvitem_cliente_identificación"
                     app:layout_constraintEnd_toEndOf="parent"
                     android:text="Frecuente"
-                    android:textSize="12sp"
+                    android:textSize="10sp"
                     android:textColor="@color/purple_500"
                     android:textStyle="bold"
                     />
