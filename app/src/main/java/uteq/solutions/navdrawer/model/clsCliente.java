@@ -20,10 +20,8 @@ public class clsCliente {
         identificacion=a.getString("identificacion");
         tipoidentificacion = a.getString("c_tipoidentificacion");
 
-        correo = a.getString("correo");
-        if(!a.isNull("c_tipocliente"))
-             tipocliente = a.getString("c_tipocliente");
-
+        correo = a.isNull("correo")?"":a.getString("correo");
+        tipocliente = a.isNull("c_tipocliente")?"":a.getString("c_tipocliente");
         ID = a.getInt("id");
 
 

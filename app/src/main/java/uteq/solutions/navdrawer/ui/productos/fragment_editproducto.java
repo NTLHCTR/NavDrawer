@@ -188,6 +188,11 @@ public class fragment_editproducto extends Fragment {
         if (addproductopart2.itemEnvase>0)  params.put("envase", addproductopart2.itemEnvase.toString());
         params.put("unidadporenvase", "1");
 
+        if(addproductopart2.txtdescuento!=null) {
+            if (!addproductopart2.txtdescuento.getText().toString().equals(""))
+                params.put("descuento", addproductopart2.txtdescuento.getText().toString().trim());
+        }
+
         if(addproductopart2.txtstockmin!=null) {
             if (!addproductopart2.txtstockmin.getText().toString().equals(""))
                 params.put("stockmin", addproductopart2.txtstockmin.getText().toString().trim());
@@ -240,7 +245,8 @@ public class fragment_editproducto extends Fragment {
                    jsonProducto.isNull("envase")?-1:jsonProducto.getInt("envase"),
                    jsonProducto.isNull("unidad")?-1:jsonProducto.getInt("unidad"),
                    jsonProducto.isNull("ubicacion")?-1:jsonProducto.getInt("ubicacion"),
-                   jsonProducto.getInt("estado"));
+                   jsonProducto.getInt("estado"),
+                   jsonProducto.isNull("descuento")?null:jsonProducto.getString("descuento"));
 
 
            fragmentManager = getParentFragmentManager();

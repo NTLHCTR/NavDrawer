@@ -68,11 +68,13 @@ public class fragment_busqclientes extends DialogFragment implements AdapterItem
 
     @Override
     public void onClick(View view, clsCliente cliente) {
-        Toast.makeText(getContext(),cliente.nombre,Toast.LENGTH_LONG).show();
+        IBusqClientes listener = (IBusqClientes) getTargetFragment();
+        listener.onFinishBusqClientesDialog("OK", cliente);
+        dismiss();
     }
 
     public interface IBusqClientes {
-        void onFinishBusqClientesDialog(String accion);
+        void onFinishBusqClientesDialog(String accion, clsCliente cliente);
     }
 
     public static fragment_busqclientes newInstance()
@@ -201,7 +203,7 @@ public class fragment_busqclientes extends DialogFragment implements AdapterItem
             @Override
             public void onClick(View view) {
                 IBusqClientes listener = (IBusqClientes) getTargetFragment();
-                listener.onFinishBusqClientesDialog("Cancelar");
+                listener.onFinishBusqClientesDialog("Cancelar", null);
                 dismiss();
             }
         });

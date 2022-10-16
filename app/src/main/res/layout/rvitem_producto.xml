@@ -8,9 +8,7 @@
                 android:id="@+id/rvitem_producto_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-               android:layout_marginLeft="10dp"
-               android:layout_marginRight="10dp"
+                android:layout_marginTop="5dp"
                 android:text="Descripción del Producto"
                 android:textStyle="bold"
                 android:textSize="14sp"
@@ -18,37 +16,75 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 />
+                <TextView
+                    android:id="@+id/rvitem_producto_pvp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    app:layout_constraintTop_toBottomOf="@id/rvitem_producto_description"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:text="PVP: $"
+                    android:textSize="12sp"
+                    android:textColor="@color/purple_500"
+                    android:textStyle="bold"
+                    />
 
-            <TextView
-                android:id="@+id/rvitem_producto_categoria"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginBottom="10dp"
-                app:layout_constraintTop_toBottomOf="@id/rvitem_producto_description"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/rvitem_producto_precio"
-                android:text="Categiría"
-                android:textAlignment="viewStart"
-                android:textSize="12sp"
-                android:textStyle="bold" />
+                    <TextView
+                        android:id="@+id/rvitem_producto_desc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginLeft="10dp"
+                        app:layout_constraintTop_toBottomOf="@id/rvitem_producto_description"
+                        app:layout_constraintStart_toEndOf="@+id/rvitem_producto_pvp"
+                        android:text="DESC 0%: $"
+                        android:textSize="12sp"
+                        android:textColor="#e24a43"
+                        android:textStyle="bold"
+                        />
 
-            <TextView
-                android:id="@+id/rvitem_producto_precio"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginBottom="10dp"
-                android:layout_marginRight="10dp"
-                app:layout_constraintTop_toBottomOf="@id/rvitem_producto_description"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:text="Valor"
-                android:textSize="12sp"
-                android:textColor="@color/purple_500"
-                android:textStyle="bold"
-                 />
+                    <TextView
+                        android:id="@+id/rvitem_producto_impuesto"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginLeft="10dp"
+                        app:layout_constraintTop_toBottomOf="@id/rvitem_producto_description"
+                        app:layout_constraintStart_toEndOf="@+id/rvitem_producto_desc"
+                        android:text="IVA 12%: $"
+                        android:textSize="12sp"
+                        android:textColor="#2a8d2e"
+                        android:textStyle="bold"
+                        />
+
+                        <TextView
+                            android:id="@+id/rvitem_producto_preciofinal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginLeft="10dp"
+                            app:layout_constraintTop_toBottomOf="@id/rvitem_producto_description"
+                            app:layout_constraintStart_toEndOf="@+id/rvitem_producto_impuesto"
+                            android:text="Total: $"
+                            android:textSize="12sp"
+                            android:textColor="#e29243"
+                            android:textStyle="bold"
+                            />
+
+                    <TextView
+                        android:id="@+id/rvitem_producto_categoria"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                       android:layout_marginBottom="10dp"
+                        app:layout_constraintTop_toBottomOf="@id/rvitem_producto_pvp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:text="Categoría"
+                        android:textAlignment="viewStart"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

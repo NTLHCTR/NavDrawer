@@ -202,6 +202,11 @@ public class fragment_addproducto extends Fragment {
         if (addproductopart2.itemEnvase>0)  params.put("envase", addproductopart2.itemEnvase.toString());
         params.put("unidadporenvase", "1");
 
+        if(addproductopart2.txtdescuento!=null) {
+            if (!addproductopart2.txtdescuento.getText().toString().equals(""))
+                params.put("descuento", addproductopart2.txtdescuento.getText().toString().trim());
+        }
+
         if(addproductopart2.txtstockmin!=null) {
             if (!addproductopart2.txtstockmin.getText().toString().equals(""))
                 params.put("stockmin", addproductopart2.txtstockmin.getText().toString().trim());

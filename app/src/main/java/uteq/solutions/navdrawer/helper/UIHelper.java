@@ -22,6 +22,14 @@ import uteq.solutions.navdrawer.model.clsListItem;
 
 public class UIHelper {
 
+    public static boolean isNumeric(String str) {
+        try {
+            Double.parseDouble(str);
+            return true;
+        } catch(NumberFormatException e){
+            return false;
+        }
+    }
 
     public static void fillCombo(AutoCompleteTextView cb, String nombreMenu, Integer idParent, Integer idItemASeleccionar, Integer addAllItem){
 

@@ -36,17 +36,17 @@ public class adapter_ListaProductos extends RecyclerView.Adapter<adapter_ListaPr
     public void onBindViewHolder(ProductoViewHolder holder, int position) {
 
         clsProducto producto = listaProductos.get(position);
-        holder.txtprecio.setText(String.format("$ %.2f",producto.valor));
-        holder.txtDesc.setText(producto.descripcion);
-        holder.txtCat.setText(producto.categoria);
+        holder.txtpvp.setText("PVP: $" + String.format("%.2f",producto.PVP));
+        Double descuento = producto.PVP -  (producto.PVP * producto.DESC/100);
+        Double iva = producto.PVP + (producto.PVP * producto.IVA/100);
 
-        holder.txtDesc.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //clsProducto item = listaProductos.get(position);
-                //Toast.makeText(Ctx, "You clicked " + item.descripcion, Toast.LENGTH_LONG).show();
-            }
-        });
+        holder.txtdescuento.setText("DESC: " + (int)producto.DESC +"%");
+        holder.txtimpuesto.setText("IVA: " + (int)producto.IVA +"%");
+        holder.txttotal.setText("Final: $" + String.format("%.2f",producto.PVP  - descuento + iva));
+
+        holder.txtDesc.setText(producto.descripcion);
+        holder.txtCat.setText(producto.categoria + "  " + (!producto.UnidadMedida.equals("")?"UM: " + producto.UnidadMedida:""));
+
     }
 
 
@@ -71,14 +71,17 @@ public class adapter_ListaProductos extends RecyclerView.Adapter<adapter_ListaPr
 
     class ProductoViewHolder extends RecyclerView.ViewHolder {
 
-        TextView txtDesc, txtCat, txtprecio;
+        TextView txtDesc, txtCat, txtpvp, txtdescuento, txtimpuesto, txttotal;
 
         public ProductoViewHolder(View itemView) {
             super(itemView);
 
             txtDesc= itemView.findViewById(R.id.rvitem_producto_description);
             txtCat = itemView.findViewById(R.id.rvitem_producto_categoria);
-            txtprecio = itemView.findViewById(R.id.rvitem_producto_precio);
+            txtpvp = itemView.findViewById(R.id.rvitem_producto_pvp);
+            txtdescuento = itemView.findViewById(R.id.rvitem_producto_desc);
+            txtimpuesto = itemView.findViewById(R.id.rvitem_producto_impuesto);
+            txttotal = itemView.findViewById(R.id.rvitem_producto_preciofinal);
 
         }
     }

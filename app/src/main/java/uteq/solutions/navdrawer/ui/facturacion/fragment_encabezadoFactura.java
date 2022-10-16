@@ -34,6 +34,7 @@ import uteq.solutions.navdrawer.R;
 import uteq.solutions.navdrawer.dialogs.fragment_busqclientes;
 import uteq.solutions.navdrawer.dialogs.fragment_filtrosclientes;
 import uteq.solutions.navdrawer.helper.UIHelper;
+import uteq.solutions.navdrawer.model.clsCliente;
 import uteq.solutions.navdrawer.model.clsListItem;
 import uteq.solutions.navdrawer.model.clsProducto;
 
@@ -45,13 +46,10 @@ public class fragment_encabezadoFactura extends Fragment
     private Button btSelectDate, btSearchCliente;
     private TextView lblFecha;
 
-    AutoCompleteTextView cbTipoID;
-    TextInputLayout cbTipoIDLy;
     TextInputLayout txtidly, txtnombrely, txtcorreoly;
     TextInputEditText txtid, txtnombre, txtcorreo;
     ProgressBar pb ;
 
-    Integer  itemTipoID=-1;
 
     public fragment_encabezadoFactura() {
         // Required empty public constructor
@@ -84,22 +82,21 @@ public class fragment_encabezadoFactura extends Fragment
         btSearchCliente = (Button) v.findViewById(R.id.btEncFacBuscarC);
         lblFecha  = (TextView) v.findViewById(R.id.lblEncFacFecha);
 
-        cbTipoID = (AutoCompleteTextView) v.findViewById(R.id.actvEncFactTipoIDCliente);
+
         txtid = (TextInputEditText) v.findViewById(R.id.txtEncFactIdCliente);
         txtnombre = (TextInputEditText) v.findViewById(R.id.txtEncFacNombreC);
         txtcorreo = (TextInputEditText) v.findViewById(R.id.txtEncFacCorreoC);
 
+        txtid.setKeyListener(null); txtnombre.setKeyListener(null);
+        txtcorreo.setKeyListener(null);
 
         txtidly = (TextInputLayout) v.findViewById(R.id.txtEncFacClienteIDLy);
         txtnombrely = (TextInputLayout) v.findViewById(R.id.txtEncFacNombreCLy);
         txtcorreoly = (TextInputLayout) v.findViewById(R.id.txtFactEnCorreoLy);
-        cbTipoIDLy = (TextInputLayout) v.findViewById(R.id.cbEncFacTipoIDClienteLy);
-
 
         pb = (ProgressBar) v.findViewById(R.id.idLoadingPB);
         pb.setVisibility(View.GONE);
 
-        UIHelper.fillCombo(cbTipoID, "tipoid",-1 , -1,-1);
 
         return v;
     }
@@ -108,23 +105,9 @@ public class fragment_encabezadoFactura extends Fragment
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        cbTipoID.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                clsListItem item = (clsListItem)adapterView.getItemAtPosition(i);
-                itemTipoID=item.ID;
-            }
-        });
 
         btSearchCliente.setOnClickListener(this);
 
-
-        txtid.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(getContext(),"Texto: " + txtid.getText(),Toast.LENGTH_LONG).show();
-            }
-        });
 
         btSelectDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -150,9 +133,11 @@ public class fragment_encabezadoFactura extends Fragment
     }
 
     @Override
-    public void onFinishBusqClientesDialog(String accion) {
+    public void onFinishBusqClientesDialog(String accion, clsCliente cliente ) {
         if(accion.equals("OK")){
-
+            txtcorreo.setText(cliente.correo);
+            txtid.setText(cliente.tipoidentificacion + ": " + cliente.identificacion);
+            txtnombre.setText(cliente.nombre);
         }
     }
 

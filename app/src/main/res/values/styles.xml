@@ -5,10 +5,15 @@
         <item name="iconPadding">0dp</item>
         <item name="android:insetTop">0dp</item>
         <item name="android:insetBottom">0dp</item>
-        <item name="android:paddingLeft">7dp</item>
-        <item name="android:paddingRight">0dp</item>
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:paddingRight">10dp</item>
         <item name="android:minWidth">40dp</item>
         <item name="android:minHeight">40dp</item>
+    </style>
+
+    <style name="error_appearancewithoutText" parent="@android:style/TextAppearance">
+        <item name="android:textColor">#f44336</item>
+        <item name="android:textSize">0sp</item>
     </style>
 
 </resources>

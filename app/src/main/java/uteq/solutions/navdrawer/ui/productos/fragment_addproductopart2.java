@@ -27,8 +27,8 @@ public class fragment_addproductopart2 extends Fragment {
 
     AutoCompleteTextView cbBodega, cbUnidad, cbEnvase, cbEstado ;
     TextInputLayout  cbEnvasely, CbUnidadLy, cbBodegaly, cbEstadoly;;
-    TextInputLayout  txtstockminly, txtstockmaxly;
-    TextInputEditText  txtstockmin, txtstockmax;
+    TextInputLayout  txtstockminly, txtstockmaxly, txtdescuentoly;
+    TextInputEditText  txtstockmin, txtstockmax, txtdescuento;
 
     private String Modo; //Add o Upd
 
@@ -47,12 +47,13 @@ public class fragment_addproductopart2 extends Fragment {
     }
 
     public static fragment_addproductopart2 newInstance(String _Modo, String StockMin, String StockMax,
-                                                        int Envase, int Unidad, int Ubicacion, int Estado) {
+                                                        int Envase, int Unidad, int Ubicacion, int Estado, String Descuento) {
         fragment_addproductopart2 fragment = new fragment_addproductopart2();
         Bundle args = new Bundle();;
         args.putString("Modo", _Modo);
         if(StockMin!=null)    args.putDouble("StockMin",Double.parseDouble(StockMin));
         if(StockMax!=null)  args.putDouble("StockMax",Double.parseDouble(StockMax));
+        if(Descuento!=null)  args.putDouble("Descuento",Double.parseDouble(Descuento));
         args.putInt("Envase", Envase);
         args.putInt("Unidad", Unidad);
         args.putInt("Ubicacion", Ubicacion);
@@ -88,9 +89,11 @@ public class fragment_addproductopart2 extends Fragment {
 
         txtstockmin = (TextInputEditText) root.findViewById(R.id.txtAddPStockMin);
         txtstockmax = (TextInputEditText) root.findViewById(R.id.txtAddPStockMax);
+        txtdescuento = (TextInputEditText) root.findViewById(R.id.txtAddPDesc);
 
         txtstockminly = (TextInputLayout) root.findViewById(R.id.lblStockMin);
         txtstockmaxly = (TextInputLayout) root.findViewById(R.id.lblStockMax);
+        txtdescuentoly = (TextInputLayout) root.findViewById(R.id.lblAddPDescLy);
 
 
         cbEstadoly  = (TextInputLayout) root.findViewById(R.id.cbEstado);
@@ -107,6 +110,8 @@ public class fragment_addproductopart2 extends Fragment {
             UIHelper.fillCombo(cbUnidad, "uni", -1, -1, -1);
         }else{
 
+            if(getArguments().containsKey("Descuento"))
+                txtdescuento.setText(String.format("%,.2f",getArguments().getDouble("Descuento")));
             if(getArguments().containsKey("StockMin"))
                  txtstockmin.setText(String.format("%,.2f",getArguments().getDouble("StockMin")));
             if(getArguments().containsKey("StockMax"))
@@ -129,6 +134,7 @@ public class fragment_addproductopart2 extends Fragment {
 
         txtstockmin.setFilters(new InputFilter[] {new DecimalDigitsInputFilter(5,2)});
         txtstockmax.setFilters(new InputFilter[] {new DecimalDigitsInputFilter(5,2)});
+        txtdescuento.setFilters(new InputFilter[] {new DecimalDigitsInputFilter(5,2)});
 
 
         cbEstado.setOnItemClickListener(new AdapterView.OnItemClickListener() {

@@ -7,14 +7,8 @@ import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentContainerView;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.fragment.NavHostFragment;
-import androidx.navigation.ui.NavigationUI;
 
 
 import android.transition.AutoTransition;
@@ -25,23 +19,15 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.EditText;
 import android.widget.FrameLayout;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.android.material.button.MaterialButtonToggleGroup;
 import com.google.android.material.tabs.TabLayout;
 
 import uteq.solutions.navdrawer.R;
-import uteq.solutions.navdrawer.model.clsListItem;
 import uteq.solutions.navdrawer.model.clsProducto;
-import uteq.solutions.navdrawer.ui.productos.fragment_addproductopart1;
-import uteq.solutions.navdrawer.ui.productos.fragment_addproductopart2;
 
 
 public class fragment_Factura extends Fragment {
@@ -58,6 +44,7 @@ public class fragment_Factura extends Fragment {
     private fragment_encabezadoFactura fragmentEncabezado;
     private fragment_detallefactura fragmentDetalle;
     private fragment_FormasPago fragmentFormasPago;
+    private fragment_detfaclistaproductos fragmentDetalleListaProds;
 
     NavController navController;
 
@@ -98,6 +85,7 @@ public class fragment_Factura extends Fragment {
         fragmentEncabezado = new fragment_encabezadoFactura();
         fragmentDetalle = new fragment_detallefactura();
         fragmentFormasPago = new fragment_FormasPago();
+        fragmentDetalleListaProds = new fragment_detfaclistaproductos();
 
         getParentFragmentManager().beginTransaction()
                 .replace(R.id.frameLayout, fragmentEncabezado)
@@ -124,6 +112,11 @@ public class fragment_Factura extends Fragment {
                                 .commit();
                         break;
                     case 2:
+                        getParentFragmentManager().beginTransaction()
+                                .replace(R.id.frameLayout, fragmentDetalleListaProds)
+                                .commit();
+                        break;
+                    case 3:
                         getParentFragmentManager().beginTransaction()
                                 .replace(R.id.frameLayout, fragmentFormasPago)
                                 .commit();
@@ -208,7 +201,7 @@ public class fragment_Factura extends Fragment {
         viewModel.getlstProductos().observe(getViewLifecycleOwner(), lstproducts -> {
             Double total=0.0;
             for (clsProducto producto : lstproducts) {
-                    total+=producto.valor;
+                    total+=producto.PVP;
             }
             lblTotalHead.setText(total.toString());
             lblTotal.setText(total.toString());

@@ -43,7 +43,7 @@ public class HTTPErrorResponseDialog implements  Response.ErrorListener{
                         .setMessage(msg.getString("error").toString())
                         .setPositiveButton("Ok", null)
                         .show();
-                else {
+                else if(msg.has("validaciones")) {
                     JSONArray vals=  msg.getJSONArray("validaciones");
                     CharSequence[] items = new String[vals.length()];
                     for (int i = 0; i < vals.length(); i++) {
@@ -53,6 +53,13 @@ public class HTTPErrorResponseDialog implements  Response.ErrorListener{
                             .setTitle("Error: Lista de Validaciones")
                             .setIcon(R.drawable.ic_baseline_error_24)
                             .setItems(items, null)
+                            .setPositiveButton("Ok", null)
+                            .show();
+                }else{
+                    new MaterialAlertDialogBuilder(cntx)
+                            .setTitle("Error  " + error.networkResponse.statusCode)
+                            .setIcon(R.drawable.ic_baseline_error_24)
+                            .setMessage(msg.toString())
                             .setPositiveButton("Ok", null)
                             .show();
                 }
