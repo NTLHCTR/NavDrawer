@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".dialogs.fragment_busqproducts">
+
+ <ScrollView
+     android:id="@+id/contentList"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent">
+
+     <androidx.constraintlayout.widget.ConstraintLayout
+         android:layout_width="match_parent"
+         android:layout_height="match_parent"
+         >
+
+         <TextView
+             android:id="@+id/txtTitulo"
+             android:layout_width="0dp"
+             android:layout_height="wrap_content"
+             android:layout_marginTop="15dp"
+             android:text="Seleccione Producto"
+             android:textAlignment="center"
+             android:textSize="20sp"
+             android:textStyle="bold"
+             app:layout_constraintEnd_toStartOf="@+id/btCancelarBusqP"
+             app:layout_constraintStart_toStartOf="parent"
+             app:layout_constraintTop_toTopOf="parent" />
+
+         <Button
+             android:id="@+id/btCancelarBusqP"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_marginTop="10dp"
+             android:layout_marginRight="10dp"
+             android:layout_marginBottom="10dp"
+             app:layout_constraintTop_toTopOf="parent"
+             app:layout_constraintStart_toEndOf="@+id/txtTitulo"
+             app:layout_constraintEnd_toEndOf="parent"
+             app:icon="@drawable/ic_baseline_close_24"
+             style="@style/Widget.App.Button.OutlinedButton.IconOnly"
+             />
+
+
+
+
+         <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/lblBusqPBusqLy"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:hint="ID o Nombre"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btBusqPBuscar"
+        app:layout_constraintTop_toBottomOf="@+id/txtTitulo">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/txtBusqPBusq"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textShortMessage"
+            android:maxLength="20" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+       <Button
+           android:id="@+id/btBusqPBuscar"
+           style="@style/Widget.App.Button.OutlinedButton.IconOnly"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_marginLeft="10dp"
+           android:layout_marginTop="20dp"
+           android:layout_marginRight="10dp"
+           app:layout_constraintEnd_toEndOf="parent"
+           app:layout_constraintTop_toBottomOf="@+id/txtTitulo"
+           app:layout_constraintStart_toEndOf="@+id/lblBusqPBusqLy"
+           app:icon="@drawable/ic_baseline_search_24" />
+
+         <com.google.android.material.textfield.TextInputLayout
+             android:id="@+id/cbCampoOrden"
+             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+             android:layout_width="200dp"
+             android:layout_height="wrap_content"
+             android:layout_margin="10dp"
+             android:hint="Orden"
+             app:layout_constraintEnd_toStartOf="@+id/tgModoOrden"
+             app:layout_constraintStart_toStartOf="parent"
+             app:layout_constraintTop_toBottomOf="@+id/lblBusqPBusqLy">
+
+             <AutoCompleteTextView
+                 android:id="@+id/actvCampoOrden"
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:inputType="none"></AutoCompleteTextView>
+
+         </com.google.android.material.textfield.TextInputLayout>
+
+         <com.google.android.material.button.MaterialButtonToggleGroup
+             android:id="@+id/tgModoOrden"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_marginTop="20dp"
+             android:layout_marginLeft="10dp"
+             app:layout_constraintStart_toEndOf="@+id/cbCampoOrden"
+             app:singleSelection="true"
+             app:checkedButton="@+id/btUpOrderListaClientes"
+             app:layout_constraintTop_toBottomOf="@+id/lblBusqPBusqLy">
+
+             <Button
+                 android:id="@+id/btUpOrderListaClientes"
+                 style="@style/Widget.App.Button.OutlinedButton.IconOnly"
+                 android:layout_width="wrap_content"
+                 android:layout_height="match_parent"
+                 app:icon="@drawable/ic_baseline_arrow_circle_up_24" />
+
+             <Button
+                 android:id="@+id/btDownOrderListaClientes"
+                 style="@style/Widget.App.Button.OutlinedButton.IconOnly"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 app:icon="@drawable/ic_baseline_arrow_circle_down_24" />
+         </com.google.android.material.button.MaterialButtonToggleGroup>
+
+
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvListaProductos"
+            android:layout_margin="10dp"
+            android:background="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="500dp"
+            tools:listitem="@layout/rvitem_producto"
+            app:layout_constraintBottom_toTopOf="@+id/txtfoot"
+            app:layout_constraintTop_toBottomOf="@+id/cbCampoOrden"
+            />
+
+         <TextView
+             android:id="@+id/txtfoot"
+             android:layout_width="match_parent"
+             app:layout_constraintBottom_toBottomOf="parent"
+             android:layout_height="20dp"></TextView>
+
+     </androidx.constraintlayout.widget.ConstraintLayout>
+
+ </ScrollView>
+
+    <ProgressBar
+        android:id="@+id/idLoadingPB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

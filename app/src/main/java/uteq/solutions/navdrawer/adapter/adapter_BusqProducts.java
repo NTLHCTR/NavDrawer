@@ -11,15 +11,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import uteq.solutions.navdrawer.R;
+import uteq.solutions.navdrawer.model.clsCliente;
 import uteq.solutions.navdrawer.model.clsProducto;
 
-public class adapter_ListaProductos extends RecyclerView.Adapter<adapter_ListaProductos.ProductoViewHolder>{
+public class adapter_BusqProducts extends RecyclerView.Adapter<adapter_BusqProducts.ProductoViewHolder>{
 
 
     private Context Ctx;
     private List<clsProducto> listaProductos;
+    private AdapterItemProductoClickListener clickListener;
 
-    public adapter_ListaProductos(Context mCtx, List<clsProducto> listaProductos) {
+    public adapter_BusqProducts(Context mCtx, List<clsProducto> listaProductos) {
         this.listaProductos = listaProductos;
         Ctx=mCtx;
     }
@@ -45,12 +47,14 @@ public class adapter_ListaProductos extends RecyclerView.Adapter<adapter_ListaPr
         holder.txtimpuesto.setText("IVA: " + (int)producto.IVA +"%");
         holder.txttotal.setText("Final: $" + String.format("%.2f",PNeto + iva));
 
-
         holder.txtDesc.setText(producto.descripcion);
         holder.txtCat.setText(producto.categoria + "  " + (!producto.UnidadMedida.equals("")?"UM: " + producto.UnidadMedida:""));
 
     }
 
+    public void setClickListener(AdapterItemProductoClickListener itemClickListener) {
+        this.clickListener = itemClickListener;
+    }
 
     @Override
     public int getItemCount() {
@@ -71,7 +75,8 @@ public class adapter_ListaProductos extends RecyclerView.Adapter<adapter_ListaPr
         return listaProductos;
     }
 
-    class ProductoViewHolder extends RecyclerView.ViewHolder {
+    class ProductoViewHolder extends RecyclerView.ViewHolder
+            implements View.OnClickListener{
 
         TextView txtDesc, txtCat, txtpvp, txtdescuento, txtimpuesto, txttotal;
 
@@ -85,6 +90,14 @@ public class adapter_ListaProductos extends RecyclerView.Adapter<adapter_ListaPr
             txtimpuesto = itemView.findViewById(R.id.rvitem_producto_impuesto);
             txttotal = itemView.findViewById(R.id.rvitem_producto_preciofinal);
 
+            itemView.setOnClickListener(this);
+
+
+        }
+
+        @Override
+        public void onClick(View view) {
+            if (clickListener != null) clickListener.onClick(view, getData().get(getAdapterPosition()));
         }
     }
 }

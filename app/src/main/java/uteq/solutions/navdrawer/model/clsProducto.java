@@ -13,6 +13,7 @@ public class clsProducto {
     public double PVP;
     public double IVA;
     public double DESC;
+    public double PMayorista;
     public String ImpuestoDescr;
     public String UnidadMedida;
     public int ID;
@@ -22,18 +23,15 @@ public class clsProducto {
         descripcion =  a.getString("descripcion") ;
         categoria=a.getString("p_categoria");
         PVP = a.getDouble("precio_unidad");
+        PMayorista = a.getDouble("precio_mayorista");
         IVA =  a.getDouble("p_impuestovalor");
         ImpuestoDescr = a.getString("p_impuesto") ;
         DESC = a.isNull("descuento")?0:a.getDouble("descuento");
         UnidadMedida = a.isNull("p_unidad")?"":a.getString("p_unidad");
+
     }
 
-    /*public clsProducto(String _desc, String _categoria, Double _PVP, Integer _ID) {
-        descripcion =  _desc;
-        categoria= _categoria;
-        PVP = _PVP;
-        ID = _ID;
-    }*/
+
 
     public static ArrayList<clsProducto> JsonObjectsBuild(JSONArray datos) throws JSONException {
         ArrayList<clsProducto> productos = new ArrayList<>();

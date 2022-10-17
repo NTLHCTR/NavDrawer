@@ -20,6 +20,7 @@ public class GlobalInfo {
     public static final String URL_EditProducto="https://api.uealecpeterson.net/public/productos/editar/";
     public static final String URL_ActualizaEstadoProducto="https://api.uealecpeterson.net/public/productos/setestado";
     public static final String URL_ListaProductos="https://api.uealecpeterson.net/public/productos/search";
+    public static final String URL_BusqProductos="https://api.uealecpeterson.net/public/productos/searchtoselect";
     public static final Integer CONST_estadoVigenteProductos=1;
     public static final Integer CONST_estadoNOVigenteProductos=2;
 

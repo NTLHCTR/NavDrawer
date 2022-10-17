@@ -26,7 +26,8 @@
         <entry key="app/src/main/res/layout/fragment_addproductopart1.xml" value="0.26149131767109296" />
         <entry key="app/src/main/res/layout/fragment_addproductopart2.xml" value="0.25052083333333336" />
         <entry key="app/src/main/res/layout/fragment_busqclientes.xml" value="0.2712962962962963" />
-        <entry key="app/src/main/res/layout/fragment_detallefactura.xml" value="0.2609805924412666" />
+        <entry key="app/src/main/res/layout/fragment_busqproducts.xml" value="0.2609805924412666" />
+        <entry key="app/src/main/res/layout/fragment_detallefactura.xml" value="0.2712962962962963" />
         <entry key="app/src/main/res/layout/fragment_detfaclistaproductos.xml" value="0.28177083333333336" />
         <entry key="app/src/main/res/layout/fragment_editcliente.xml" value="0.28177083333333336" />
         <entry key="app/src/main/res/layout/fragment_editproducto.xml" value="0.28177083333333336" />

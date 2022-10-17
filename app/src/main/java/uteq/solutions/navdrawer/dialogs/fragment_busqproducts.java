@@ -36,23 +36,24 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import uteq.solutions.navdrawer.R;
-import uteq.solutions.navdrawer.adapter.AdapterItemClickListener;
+import uteq.solutions.navdrawer.adapter.AdapterItemProductoClickListener;
 import uteq.solutions.navdrawer.adapter.adapter_BusqClientes;
-import uteq.solutions.navdrawer.adapter.adapter_ListaClientes;
+import uteq.solutions.navdrawer.adapter.adapter_BusqProducts;
+import uteq.solutions.navdrawer.adapter.adapter_ListaProductos;
 import uteq.solutions.navdrawer.helper.GlobalInfo;
 import uteq.solutions.navdrawer.helper.HTTPErrorResponseDialog;
 import uteq.solutions.navdrawer.helper.UIHelper;
 import uteq.solutions.navdrawer.model.clsCliente;
 import uteq.solutions.navdrawer.model.clsListItem;
+import uteq.solutions.navdrawer.model.clsProducto;
 
-public class fragment_busqclientes extends DialogFragment implements AdapterItemClickListener{
+public class fragment_busqproducts extends DialogFragment implements AdapterItemProductoClickListener {
 
     Button btCancelar, tbBuscar;
     MaterialButtonToggleGroup tgModoOrden;
@@ -63,23 +64,23 @@ public class fragment_busqclientes extends DialogFragment implements AdapterItem
     ProgressBar pb ;
     TextView txtBusq;
 
-    adapter_BusqClientes adapter;
-    RecyclerView rvListaClientes;
+    adapter_BusqProducts adapter;
+    RecyclerView rvListaProducts;
 
     @Override
-    public void onClick(View view, clsCliente cliente) {
-        IBusqClientes listener = (IBusqClientes) getTargetFragment();
-        listener.onFinishBusqClientesDialog("OK", cliente);
+    public void onClick(View view, clsProducto producto) {
+        IBusqProductos listener = (IBusqProductos) getTargetFragment();
+        listener.onFinishBusqProductsDialog("OK", producto);
         dismiss();
     }
 
-    public interface IBusqClientes {
-        void onFinishBusqClientesDialog(String accion, clsCliente cliente);
+    public interface IBusqProductos {
+        void onFinishBusqProductsDialog(String accion, clsProducto producto);
     }
 
-    public static fragment_busqclientes newInstance()
+    public static fragment_busqproducts newInstance()
     {
-        fragment_busqclientes f = new fragment_busqclientes();
+        fragment_busqproducts f = new fragment_busqproducts();
         Bundle args = new Bundle();
        /* args.putInt("itemFuente",itemFuente);
         args.putInt("itemTipoCliente",itemTipoCliente);
@@ -92,20 +93,7 @@ public class fragment_busqclientes extends DialogFragment implements AdapterItem
         return f;
     }
 
-    @Override
-    public void onStart()
-    {
-        super.onStart();
-        Dialog dialog = getDialog();
-        if (dialog != null)
-        {
-            int width = ViewGroup.LayoutParams.MATCH_PARENT;
-            int height = ViewGroup.LayoutParams.MATCH_PARENT;
-            dialog.getWindow().setLayout(width, height);
-        }
-    }
-
-    public fragment_busqclientes() {    }
+    public fragment_busqproducts() {    }
 
     @NonNull
     @Override
@@ -126,24 +114,25 @@ public class fragment_busqclientes extends DialogFragment implements AdapterItem
     private Dialog crearDialogoFiltrosClientes(){
         AlertDialog.Builder builder=new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        View v=inflater.inflate(R.layout.fragment_busqclientes,null);
+        View v=inflater.inflate(R.layout.fragment_busqproducts,null);
 
-        tbBuscar = (Button) v.findViewById(R.id.btBusqCBuscar);
-        btCancelar = (Button) v.findViewById(R.id.btCancelarBusqClientes);
-        txtBusq = (TextView) v.findViewById(R.id.txtBusqCIdCliente);
+        tbBuscar = (Button) v.findViewById(R.id.btBusqPBuscar);
+        btCancelar = (Button) v.findViewById(R.id.btCancelarBusqP);
+        txtBusq = (TextView) v.findViewById(R.id.txtBusqPBusq);
 
         cbOrden = (AutoCompleteTextView) v.findViewById(R.id.actvCampoOrden);
         tgModoOrden = (MaterialButtonToggleGroup) v.findViewById(R.id.tgModoOrden);
 
-        rvListaClientes = v.findViewById(R.id.rvListaClientes);
-        rvListaClientes.setHasFixedSize(true);
-        rvListaClientes.setLayoutManager(new LinearLayoutManager(getContext()));
-        rvListaClientes.setItemAnimator(new DefaultItemAnimator());
 
-        rvListaClientes.addItemDecoration(new DividerItemDecoration(rvListaClientes.getContext(), LinearLayout.VERTICAL));
+        rvListaProducts = v.findViewById(R.id.rvListaProductos);
+        rvListaProducts.setHasFixedSize(true);
+        rvListaProducts.setLayoutManager(new LinearLayoutManager(getContext()));
+        rvListaProducts.setItemAnimator(new DefaultItemAnimator());
+
+        rvListaProducts.addItemDecoration(new DividerItemDecoration(rvListaProducts.getContext(), LinearLayout.VERTICAL));
         LayoutAnimationController animation = AnimationUtils.loadLayoutAnimation(getContext(),
                 R.anim.layout_animation_down_to_up);
-        rvListaClientes.setLayoutAnimation(animation);
+        rvListaProducts.setLayoutAnimation(animation);
 
 
         itemOrden=6; itemModoOrden=1;
@@ -164,17 +153,29 @@ public class fragment_busqclientes extends DialogFragment implements AdapterItem
     }
 
     @Override
+    public void onStart()
+    {
+        super.onStart();
+        Dialog dialog = getDialog();
+        if (dialog != null)
+        {
+            int width = ViewGroup.LayoutParams.MATCH_PARENT;
+            int height = ViewGroup.LayoutParams.MATCH_PARENT;
+            dialog.getWindow().setLayout(width, height);
+        }
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         ArrayList<clsListItem> listCampoOrden = new ArrayList<clsListItem>();
-        listCampoOrden.add(new clsListItem(1,"Fecha Creación",R.drawable.ic_baseline_calendar_month_24));
-        listCampoOrden.add(new clsListItem(2,"Tipo Cliente", R.drawable.ic_baseline_person_24));
-        listCampoOrden.add(new clsListItem(3,"Top",R.drawable.ic_baseline_attach_money_24));
-        listCampoOrden.add(new clsListItem(4,"Género", R.drawable.ic_baseline_person_24));
-        listCampoOrden.add(new clsListItem(5,"Tipo Identificacion", R.drawable.ic_baseline_trending_up_24));
-        listCampoOrden.add(new clsListItem(6,"Nombre",R.drawable.ic_baseline_person_24));
-        UIHelper.fillCombo(cbOrden, listCampoOrden, 6);
+        listCampoOrden.add(new clsListItem(1,"Descripción",R.drawable.ic_baseline_calendar_month_24));
+        listCampoOrden.add(new clsListItem(2,"Categoría", R.drawable.ic_baseline_person_24));
+        listCampoOrden.add(new clsListItem(3,"Fecha Creación",R.drawable.ic_baseline_attach_money_24));
+        listCampoOrden.add(new clsListItem(4,"Clase", R.drawable.ic_baseline_person_24));
+        listCampoOrden.add(new clsListItem(5,"Precio", R.drawable.ic_baseline_trending_up_24));
+        UIHelper.fillCombo(cbOrden, listCampoOrden, 1);
         tgModoOrden.check(R.id.btUpOrderListaClientes);
 
         return inflater.inflate(R.layout.fragment_filtrosclientes, container, false);
@@ -184,6 +185,20 @@ public class fragment_busqclientes extends DialogFragment implements AdapterItem
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+       /* tgClase.addOnButtonCheckedListener(new MaterialButtonToggleGroup.OnButtonCheckedListener() {
+            @Override
+            public void onButtonChecked(MaterialButtonToggleGroup group, int checkedId, boolean isChecked) {
+                if(isChecked) {
+                    if (checkedId == R.id.btBusqPBien)
+                        itemClase = 1;
+                    else if (checkedId == R.id.btBusqPServicio)
+                        itemClase = 2;
+                    else
+                        itemClase = 0;
+                }
+            }
+        });*/
 
 
         tgModoOrden.addOnButtonCheckedListener(new MaterialButtonToggleGroup.OnButtonCheckedListener() {
@@ -201,34 +216,29 @@ public class fragment_busqclientes extends DialogFragment implements AdapterItem
         });
 
 
-                /*IfiltrosClientes listener = (IfiltrosClientes) getTargetFragment();
-                listener.onFinishFiltrosClientesDialog("Filtrar", itemFuente, itemTipoCliente,itemTipoID,
-                                                    itemGenero,itemEstado, itemOrden,itemModoOrden);
-                dismiss();*/
-
         tbBuscar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getListaClientes ();
+                getListaProductos ();
             }
         });
         btCancelar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                IBusqClientes listener = (IBusqClientes) getTargetFragment();
-                listener.onFinishBusqClientesDialog("Cancelar", null);
+                IBusqProductos listener = (IBusqProductos) getTargetFragment();
+                listener.onFinishBusqProductsDialog("Cancelar", null);
                 dismiss();
             }
         });
     }
 
-    private void loadListOnRV (ArrayList<clsCliente> lstClientes){
-        adapter = new adapter_BusqClientes(getContext(), lstClientes);
-        rvListaClientes.setAdapter(adapter);
-        adapter.setClickListener(this);
+    private void loadListOnRV (ArrayList<clsProducto> lstProductos){
+        adapter = new adapter_BusqProducts(getContext(), lstProductos);
+        rvListaProducts.setAdapter(adapter);
+       adapter.setClickListener(this);
     }
 
-    private void getListaClientes (){
+    private void getListaProductos (){
         String Busq= txtBusq.getText().toString().trim();
         if(Busq.equals("")){
             new MaterialAlertDialogBuilder(getContext())
@@ -241,27 +251,29 @@ public class fragment_busqclientes extends DialogFragment implements AdapterItem
         }
 
         pb.setVisibility(View.VISIBLE);
-        rvListaClientes.setAdapter(null);
+        rvListaProducts.setAdapter(null);
 
         Map<String, String> params = new HashMap();
         params.put("busq", Busq.trim());
+       // if(itemClase>0)  params.put("clase", itemClase.toString());
         if(itemOrden>0)  params.put("orden", itemOrden.toString());
         if(itemModoOrden>0)  params.put("modoorden", itemModoOrden.toString());
 
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
         requestQueue.add(new JsonObjectRequest
-                (Request.Method.POST, GlobalInfo.URL_BusqClientes, new JSONObject(params), new Response.Listener<JSONObject>() {
+                (Request.Method.POST, GlobalInfo.URL_BusqProductos, new JSONObject(params), new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        ArrayList<clsCliente> lstClientes = new ArrayList<clsCliente> ();
+                        ArrayList<clsProducto> lstProductos = new ArrayList<clsProducto> ();
                         try{
-                            JSONArray JSONlistaUsuarios=  response.getJSONArray("clientes");
-                            lstClientes = clsCliente.JsonObjectsBuild(JSONlistaUsuarios);
 
-                            loadListOnRV (lstClientes);
+                            JSONArray JSONlistaUsuarios=  response.getJSONArray("productos");
+                            lstProductos = clsProducto.JsonObjectsBuild(JSONlistaUsuarios);
+
+                            loadListOnRV (lstProductos);
 
                         }catch (JSONException e){
-                            e.printStackTrace();
+                            Toast.makeText(getContext(),e.getMessage(),Toast.LENGTH_LONG).show();
                         }
                         pb.setVisibility(View.GONE);
                     }
@@ -273,14 +285,5 @@ public class fragment_busqclientes extends DialogFragment implements AdapterItem
             }
         });
     }
-
-
-
-
-
-
-
-
-
 
 }

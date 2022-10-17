@@ -42,16 +42,21 @@ import java.util.HashMap;
 import java.util.Map;
 
 import uteq.solutions.navdrawer.R;
+import uteq.solutions.navdrawer.dialogs.fragment_busqclientes;
+import uteq.solutions.navdrawer.dialogs.fragment_busqproducts;
 import uteq.solutions.navdrawer.helper.DecimalDigitsInputFilter;
 import uteq.solutions.navdrawer.helper.GlobalInfo;
 import uteq.solutions.navdrawer.helper.HTTPErrorResponseDialog;
 import uteq.solutions.navdrawer.helper.UIHelper;
+import uteq.solutions.navdrawer.model.clsCliente;
 import uteq.solutions.navdrawer.model.clsListItem;
+import uteq.solutions.navdrawer.model.clsProducto;
 import uteq.solutions.navdrawer.ui.productos.fragment_addproductopart1;
 import uteq.solutions.navdrawer.ui.productos.fragment_addproductopart2;
 
 
-public class fragment_detallefactura extends Fragment {
+public class fragment_detallefactura extends Fragment
+        implements fragment_busqproducts.IBusqProductos, View.OnClickListener {
 
     private SharedViewModel viewModel;
 
@@ -63,6 +68,7 @@ public class fragment_detallefactura extends Fragment {
     MaterialButtonToggleGroup tgTipoPrecio;
 
     ProgressBar pb ;
+    clsProducto productoSeleccionado;
 
 
 
@@ -123,6 +129,7 @@ public class fragment_detallefactura extends Fragment {
 
         tgTipoPrecio.check(R.id.btPrecioMin);
 
+        productoSeleccionado=null;
         return root;
     }
 
@@ -140,6 +147,8 @@ public class fragment_detallefactura extends Fragment {
         txtiva.setKeyListener(null);
         txtivaporc.setKeyListener(null);
         txtpfinal.setKeyListener(null);
+
+        btBuscar.setOnClickListener(this);
 
         updateUIOnNew();
 
@@ -321,29 +330,27 @@ public class fragment_detallefactura extends Fragment {
         tgTipoPrecio.setEnabled(false);
         btAgregar.setEnabled(false);
 
+        productoSeleccionado=null;
+
     }
 
-    private void showProduct(JSONObject jsonProducto){
-
+    private void showProduct(clsProducto jsonProducto){
         try {
-
             txtcant.setText("1");
-            txtdescripcion.setText(jsonProducto.getString("descripcion"));
-            Double pvp=Double.parseDouble(jsonProducto.getString("precio_unidad"));
+            txtdescripcion.setText(jsonProducto.descripcion);
+            Double pvp= jsonProducto.PVP;
             txtpvp.setText(String.format("%.2f",pvp>0?pvp:0));
 
-            btPMin.setTag(jsonProducto.getString("precio_unidad"));
-            btPMax.setTag(jsonProducto.getString("precio_mayorista"));
+            btPMin.setTag(pvp);
+            btPMax.setTag(jsonProducto.PMayorista);
 
-
-            Double descuento=jsonProducto.isNull("descuento")?0.0:
-                    Double.parseDouble(jsonProducto.getString("descuento"));
+            Double descuento=jsonProducto.DESC;
             descuento= (descuento>=0 && descuento<100)?descuento:0.0;
             txtdescuentoporc.setText(String.format("%.2f",descuento));
             txtdescuento.setText(String.format("%.2f",pvp*descuento/100));
             Double SubTotal = pvp - (pvp*descuento/100);
 
-            Double iva=Double.parseDouble(jsonProducto.getString("p_impuestovalor"));
+            Double iva=jsonProducto.IVA;
             iva= iva>=0?iva:0.0;
             txtivaporc.setText(String.format("%.2f",iva));
             txtiva.setText(String.format("%.2f",SubTotal*iva/100));
@@ -361,7 +368,7 @@ public class fragment_detallefactura extends Fragment {
 
             btAgregar.setEnabled(true);
 
-        } catch (JSONException e) {
+        } catch (Exception e) {
             Toast.makeText(getContext(),e.getMessage().toString(),Toast.LENGTH_SHORT).show();
         }
     }
@@ -380,7 +387,7 @@ public class fragment_detallefactura extends Fragment {
                         pb.setVisibility(View.GONE);
                         try {
                             JSONObject jsonProducto=  response.getJSONArray("Producto").getJSONObject(0);
-                            showProduct(jsonProducto);
+                            showProduct(new clsProducto(jsonProducto));
 
                         } catch (JSONException e) {
                             Toast.makeText(getContext(),e.getMessage().toString(),Toast.LENGTH_SHORT).show();
@@ -475,4 +482,17 @@ public class fragment_detallefactura extends Fragment {
         }
     }
 
+    @Override
+    public void onClick(View view) {
+        fragment_busqproducts dialogo = new  fragment_busqproducts();
+        dialogo.setTargetFragment(this, 300);
+        dialogo.show(getParentFragmentManager(), "DialogoFiltros");
+    }
+
+    @Override
+    public void onFinishBusqProductsDialog(String accion, clsProducto producto) {
+        if(accion.equals("OK")){
+                showProduct(producto);
+        }
+    }
 }

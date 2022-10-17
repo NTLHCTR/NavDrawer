@@ -52,6 +52,7 @@ public class adapter_BusqClientes extends RecyclerView.Adapter<adapter_BusqClien
         });*/
     }
 
+
     public void setClickListener(AdapterItemClickListener itemClickListener) {
         this.clickListener = itemClickListener;
     }
