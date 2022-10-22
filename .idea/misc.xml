@@ -44,11 +44,14 @@
         <entry key="app/src/main/res/layout/fragment_listaproductos.xml" value="0.17962962962962964" />
         <entry key="app/src/main/res/layout/fragment_scrolling.xml" value="0.2625" />
         <entry key="app/src/main/res/layout/fragment_slideshow.xml" value="0.2625" />
+        <entry key="app/src/main/res/layout/layout_itemTotalesImpFact.xml" value="0.1" />
         <entry key="app/src/main/res/layout/layout_itemlist.xml" value="0.2712962962962963" />
+        <entry key="app/src/main/res/layout/layout_itemtotalesimpfact.xml" value="0.1728515625" />
         <entry key="app/src/main/res/layout/nav_header_main.xml" value="0.2625" />
         <entry key="app/src/main/res/layout/navheader.xml" value="0.2625" />
         <entry key="app/src/main/res/layout/rvitem_cliente.xml" value="0.2712962962962963" />
         <entry key="app/src/main/res/layout/rvitem_producto.xml" value="0.375" />
+        <entry key="app/src/main/res/layout/rvitem_totalesimpfact.xml" value="0.1638888888888889" />
         <entry key="app/src/main/res/layout/switch_item.xml" value="0.2625" />
         <entry key="app/src/main/res/menu/activity_main_drawer.xml" value="0.1" />
         <entry key="app/src/main/res/menu/main.xml" value="0.2625" />

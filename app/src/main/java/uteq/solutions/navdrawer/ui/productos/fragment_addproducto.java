@@ -169,10 +169,11 @@ public class fragment_addproducto extends Fragment {
         addproductopart1.txtbbarcodely.setError(null);
         addproductopart1.txtdescly.setError(null);       addproductopart1.cbSybCatly.setError(null);
         if( addproductopart2.CbUnidadLy!=null && addproductopart2.cbBodegaly!=null &&
-                addproductopart2.cbEnvasely!=null) {
+                addproductopart2.cbEnvasely!=null && addproductopart2.cbICELy!=null) {
             addproductopart2.CbUnidadLy.setError(null);
             addproductopart2.cbBodegaly.setError(null);
             addproductopart2.cbEnvasely.setError(null);
+            addproductopart2.cbICELy.setError(null);
         }
 
         String resp=validateParams();
@@ -198,7 +199,8 @@ public class fragment_addproducto extends Fragment {
         params.put("precio_unidad", addproductopart1.txtpvp.getText().toString().trim());
         params.put("precio_mayorista", addproductopart1.txtpvpm.getText().toString().trim());
 
-        if (addproductopart2.itemUnidad>0)   params.put("unidad", addproductopart2.itemUnidad.toString());
+        if (addproductopart2.itemICE>0)     params.put("ice", addproductopart2.itemICE.toString());
+        if (addproductopart2.itemUnidad>0)  params.put("unidad", addproductopart2.itemUnidad.toString());
         if (addproductopart2.itemEnvase>0)  params.put("envase", addproductopart2.itemEnvase.toString());
         params.put("unidadporenvase", "1");
 

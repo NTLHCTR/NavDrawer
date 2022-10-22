@@ -2,7 +2,7 @@ package uteq.solutions.navdrawer.helper;
 
 public class GlobalInfo {
 
-    public static final String Token="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZHVzciI6OSwiZW1haWwiOiJjemFtYnJhbm9AdXRlcS5lZHUuZWMiLCJpYXQiOjE2NjU4NjM4NDgsImV4cCI6MTY2NjIyMzg0OH0.GwPflJIgxo-y5kIum5nR5iS7h0QBqAkTnC-cDR7xYdA";
+    public static final String Token="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZHVzciI6OSwiZW1haWwiOiJjemFtYnJhbm9AdXRlcS5lZHUuZWMiLCJpYXQiOjE2NjYzNjE0MDcsImV4cCI6MTY2NjcyMTQwN30.qJFkxrRDyuNyf6AXl2PsSB7fXTBYFraMAn7w9kn4rKI";
 
     public static final String URL_ActualizaEstadoCliente="https://api.uealecpeterson.net/public/clientes/setestado";
     public static final String URL_ListaClientes="https://api.uealecpeterson.net/public/clientes/search";
@@ -23,6 +23,9 @@ public class GlobalInfo {
     public static final String URL_BusqProductos="https://api.uealecpeterson.net/public/productos/searchtoselect";
     public static final Integer CONST_estadoVigenteProductos=1;
     public static final Integer CONST_estadoNOVigenteProductos=2;
+
+    public static final Integer CONST_tipoImpuestoIVA=2;
+    public static final Integer CONST_tipoImpuestoICE=3;
 
 
 }

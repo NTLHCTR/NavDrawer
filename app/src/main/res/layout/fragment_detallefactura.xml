@@ -100,7 +100,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="10dp"
                 android:hint="Cantidad"
-                app:layout_constraintTop_toBottomOf="@+id/lblDetFacIVAPercLy"
+                app:layout_constraintTop_toBottomOf="@+id/rlyICE"
                 app:layout_constraintStart_toEndOf="@+id/lblDetFacPFinalLy"
                 app:startIconDrawable="@drawable/ic_baseline_numbers_24"
                 app:errorTextAppearance="@style/error_appearancewithoutText"
@@ -267,7 +267,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="10dp"
                 android:hint="P. Final"
-                app:layout_constraintTop_toBottomOf="@+id/lblDetFacIVAPercLy"
+                app:layout_constraintTop_toBottomOf="@+id/rlyICE"
                 app:layout_constraintStart_toStartOf="parent"
                 app:startIconDrawable="@drawable/ic_baseline_attach_money_24"
                 app:errorTextAppearance="@style/error_appearancewithoutText"
@@ -283,6 +283,37 @@
                     android:ems="2"
                     />
             </com.google.android.material.textfield.TextInputLayout>
+
+            <RelativeLayout
+                android:id="@+id/rlyICE"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/lblDetFacIVAPercLy"
+                app:layout_constraintStart_toStartOf="parent">
+
+             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/lblDetFacICELy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                 android:layout_marginLeft="10dp"
+                 android:layout_marginRight="10dp"
+                android:hint="ICE - "
+                 app:errorTextAppearance="@style/error_appearancewithoutText"
+                app:startIconDrawable="@drawable/ic_baseline_attach_money_24"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                >
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/txtDetFacICE"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="numberDecimal"
+                    android:text="99999.99"
+                    android:editable="false"
+                    android:ems="2"
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
+            </RelativeLayout>
 
             <TextView
                 android:id="@+id/lblDetFacSubTotal"

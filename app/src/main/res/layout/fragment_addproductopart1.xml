@@ -56,12 +56,12 @@
                 app:startIconContentDescription="Código de Barra"
                 android:hint="Código"
                 app:counterEnabled="true"
-                app:counterMaxLength="50"
+                app:counterMaxLength="25"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txtbbarcode"
-                    android:maxLength="50"
+                    android:maxLength="25"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
 
@@ -76,7 +76,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 app:counterEnabled="true"
-                app:counterMaxLength="500"
+                app:counterMaxLength="300"
                 app:layout_constraintTop_toBottomOf="@id/txtbarcodely"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:hint="Descripción">
@@ -85,7 +85,7 @@
                     android:id="@+id/txtdesc"
                     android:inputType="textMultiLine"
                     android:lines="2"
-                    android:maxLength="500"
+                    android:maxLength="300"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     />

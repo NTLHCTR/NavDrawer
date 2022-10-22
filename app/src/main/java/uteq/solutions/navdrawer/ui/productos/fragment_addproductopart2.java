@@ -12,7 +12,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
+import android.widget.CompoundButton;
 import android.widget.ProgressBar;
+import android.widget.Switch;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -25,14 +27,15 @@ import uteq.solutions.navdrawer.model.clsListItem;
 
 public class fragment_addproductopart2 extends Fragment {
 
-    AutoCompleteTextView cbBodega, cbUnidad, cbEnvase, cbEstado ;
-    TextInputLayout  cbEnvasely, CbUnidadLy, cbBodegaly, cbEstadoly;;
+    AutoCompleteTextView cbBodega, cbUnidad, cbEnvase, cbEstado, cbICE;
+    TextInputLayout  cbEnvasely, CbUnidadLy, cbBodegaly, cbEstadoly, cbICELy;
     TextInputLayout  txtstockminly, txtstockmaxly, txtdescuentoly;
     TextInputEditText  txtstockmin, txtstockmax, txtdescuento;
+    Switch swICE;
 
     private String Modo; //Add o Upd
 
-    Integer  itemBodega=-1, itemUnidad=-1, itemEnvase=-1, itemEstado=-1;;
+    Integer  itemBodega=-1, itemUnidad=-1, itemEnvase=-1, itemEstado=-1, itemICE=-1;
 
     public fragment_addproductopart2() {
         // Required empty public constructor
@@ -47,13 +50,15 @@ public class fragment_addproductopart2 extends Fragment {
     }
 
     public static fragment_addproductopart2 newInstance(String _Modo, String StockMin, String StockMax,
-                                                        int Envase, int Unidad, int Ubicacion, int Estado, String Descuento) {
+                                                        int Envase, int Unidad, int Ubicacion, int Estado, String Descuento,
+                                                        int ICE) {
         fragment_addproductopart2 fragment = new fragment_addproductopart2();
         Bundle args = new Bundle();;
         args.putString("Modo", _Modo);
         if(StockMin!=null)    args.putDouble("StockMin",Double.parseDouble(StockMin));
-        if(StockMax!=null)  args.putDouble("StockMax",Double.parseDouble(StockMax));
-        if(Descuento!=null)  args.putDouble("Descuento",Double.parseDouble(Descuento));
+        if(StockMax!=null)    args.putDouble("StockMax",Double.parseDouble(StockMax));
+        if(Descuento!=null)   args.putDouble("Descuento",Double.parseDouble(Descuento));
+        args.putInt("ICE",    ICE);
         args.putInt("Envase", Envase);
         args.putInt("Unidad", Unidad);
         args.putInt("Ubicacion", Ubicacion);
@@ -68,6 +73,7 @@ public class fragment_addproductopart2 extends Fragment {
         if (getArguments() != null) {
             Modo = getArguments().getString("Modo");
             if(Modo.equals("Upd")){
+                itemICE=     getArguments().getInt("ICE");
                 itemEnvase=  getArguments().getInt("Envase");
                 itemUnidad=  getArguments().getInt("Unidad");
                 itemBodega=  getArguments().getInt("Ubicacion");
@@ -86,6 +92,8 @@ public class fragment_addproductopart2 extends Fragment {
         cbUnidad = (AutoCompleteTextView) root.findViewById(R.id.actvAddUnidad);
         cbBodega = (AutoCompleteTextView) root.findViewById(R.id.actvAddBodega);
         cbEstado = (AutoCompleteTextView) root.findViewById(R.id.actvEditEstado);
+        cbICE =    (AutoCompleteTextView) root.findViewById(R.id.actvAddICE);
+        swICE = (Switch) root.findViewById(R.id.swicthICE);
 
         txtstockmin = (TextInputEditText) root.findViewById(R.id.txtAddPStockMin);
         txtstockmax = (TextInputEditText) root.findViewById(R.id.txtAddPStockMax);
@@ -103,11 +111,13 @@ public class fragment_addproductopart2 extends Fragment {
         cbEnvasely  = (TextInputLayout) root.findViewById(R.id.cbAddEnvase);
         CbUnidadLy  = (TextInputLayout) root.findViewById(R.id.cbUnidad);
         cbBodegaly = (TextInputLayout) root.findViewById(R.id.cbAddBodega);
+        cbICELy =      (TextInputLayout) root.findViewById(R.id.cbICELy);
 
         if(Modo.equals("Add")) {
             UIHelper.fillCombo(cbBodega, "bod", -1, -1, -1);
             UIHelper.fillCombo(cbEnvase, "env", -1, -1, -1);
             UIHelper.fillCombo(cbUnidad, "uni", -1, -1, -1);
+            UIHelper.fillCombo(cbICE, "ice", -1, -1, -1);
         }else{
 
             if(getArguments().containsKey("Descuento"))
@@ -119,6 +129,8 @@ public class fragment_addproductopart2 extends Fragment {
             UIHelper.fillCombo(cbBodega, "bod", -1, itemBodega,-1);
             UIHelper.fillCombo(cbEnvase, "env", -1, itemEnvase,-1);
             UIHelper.fillCombo(cbUnidad, "uni", -1, itemUnidad,-1);
+            UIHelper.fillCombo(cbICE, "ice", -1, itemICE,-1);
+            swICE.setChecked(itemICE>0); cbICE.setEnabled(itemICE>0);
             UIHelper.fillCombo(cbEstado, "estadoprod", -1, itemEstado,-1);
 
         }
@@ -136,6 +148,23 @@ public class fragment_addproductopart2 extends Fragment {
         txtstockmax.setFilters(new InputFilter[] {new DecimalDigitsInputFilter(5,2)});
         txtdescuento.setFilters(new InputFilter[] {new DecimalDigitsInputFilter(5,2)});
 
+
+        swICE.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                cbICE.setEnabled(b);
+                cbICE.setText("",false);
+                itemICE=-1;
+            }
+        } );
+
+
+        cbICE.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                itemICE = ((clsListItem)adapterView.getItemAtPosition(i)).ID;
+            }
+        });
 
         cbEstado.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

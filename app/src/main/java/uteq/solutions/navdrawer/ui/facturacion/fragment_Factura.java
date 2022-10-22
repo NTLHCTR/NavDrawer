@@ -9,6 +9,8 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 
 import android.transition.AutoTransition;
@@ -21,12 +23,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.android.material.tabs.TabLayout;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import uteq.solutions.navdrawer.R;
+import uteq.solutions.navdrawer.adapter.adaptador_TotalesImpFactura;
+import uteq.solutions.navdrawer.helper.GlobalInfo;
+import uteq.solutions.navdrawer.model.clsFacturaTotalImpuestos;
+import uteq.solutions.navdrawer.model.clsItemFactura;
+import uteq.solutions.navdrawer.model.clsListItemTotalImpFactura;
 import uteq.solutions.navdrawer.model.clsProducto;
 
 
@@ -51,7 +62,10 @@ public class fragment_Factura extends Fragment {
     ProgressBar pb ;
 
     private viewModelFacturacion viewModel;
-    private TextView lblTotalHead, lblTotal;
+
+    private RecyclerView lvImp, lvImpValores;
+    private TextView lblTotalHead, lblTitSubSinImp, txtSubSinImpuiesto, lblTitDescuento, txtDescuento;
+    private TextView lblTituloICE, txtICE, lblTitTotalPagar, txtTotalAPagar;
 
     public fragment_Factura() {
         // Required empty public constructor
@@ -139,18 +153,75 @@ public class fragment_Factura extends Fragment {
        // cardView = r.findViewById(R.id.lyTotales);
         arrow = r.findViewById(R.id.imgarrow);
         hiddenView = r.findViewById(R.id.lytotaleshidden);
+        hiddenView.setVisibility(View.GONE);
+
+        lvImp = (RecyclerView)r.findViewById(R.id.lvImp);
+        lvImpValores = (RecyclerView)r.findViewById(R.id.lvImpValores);
 
         lblTotalHead = (TextView)r.findViewById(R.id.lblTotalHead);
-        lblTotal = (TextView)r.findViewById(R.id.lblTotalAPagar);
+        lblTitSubSinImp = (TextView)r.findViewById(R.id.lblTitSubSinImp);
+        txtSubSinImpuiesto = (TextView)r.findViewById(R.id.txtSubSinImpuiesto);
+        lblTitDescuento = (TextView)r.findViewById(R.id.lblTitDescuento);
+        txtDescuento = (TextView)r.findViewById(R.id.txtDescuento);
+        lblTituloICE = (TextView)r.findViewById(R.id.lblTituloICE);
+        txtICE = (TextView)r.findViewById(R.id.txtICE);
+        lblTitTotalPagar = (TextView)r.findViewById(R.id.lblTitTotalPagar);
+        txtTotalAPagar = (TextView)r.findViewById(R.id.txtTotalAPagar);
+
 
         arrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 if (hiddenView.getVisibility() == View.VISIBLE) {
                     TransitionManager.beginDelayedTransition(hiddenView, new AutoTransition());
                     hiddenView.setVisibility(View.GONE);
                     arrow.setImageResource(R.drawable.ic_baseline_arrow_drop_up_24);
                 } else {
+
+                    txtSubSinImpuiesto.setText( String.format("%.2f", viewModel.totalsinimpuestos.getValue()));
+                    if (viewModel.totaldescuento.getValue()>0) {
+                        txtDescuento.setVisibility(View.VISIBLE); lblTitDescuento.setVisibility(View.VISIBLE);
+                        txtDescuento.setText(String.format("%.2f", viewModel.totaldescuento.getValue()));
+                    }else{
+                        txtDescuento.setVisibility(View.GONE); lblTitDescuento.setVisibility(View.GONE);
+                    }
+                    if (viewModel.totalice.getValue()>0) {
+                        txtICE.setVisibility(View.VISIBLE); lblTituloICE.setVisibility(View.VISIBLE);
+                        txtICE.setText(String.format("%.2f", viewModel.totalice.getValue()));
+                    }else{
+                        txtICE.setVisibility(View.GONE); lblTituloICE.setVisibility(View.GONE);
+                    }
+
+                    List<clsListItemTotalImpFactura> lstItemTotalesImp = new ArrayList<clsListItemTotalImpFactura>();
+                    List<clsListItemTotalImpFactura> lstItemSUbTotalesImp = new ArrayList<clsListItemTotalImpFactura>();
+
+                    ArrayList<clsFacturaTotalImpuestos> lstTotalesImp = viewModel.getlstTotalesImpuestos().getValue();
+
+                    for (clsFacturaTotalImpuestos itemTotalImp:lstTotalesImp ) {
+                        if(itemTotalImp.tipoimpuesto== GlobalInfo.CONST_tipoImpuestoIVA){
+                            lstItemTotalesImp.add(new clsListItemTotalImpFactura(itemTotalImp.descripcionimp,
+                                    itemTotalImp.valor));
+                            lstItemSUbTotalesImp.add(new clsListItemTotalImpFactura("SubTotal " + itemTotalImp.descripcionimp,
+                                    itemTotalImp.baseimponible));
+                        }
+                    }
+
+
+                    adaptador_TotalesImpFactura adapter = new adaptador_TotalesImpFactura(lstItemSUbTotalesImp);
+                    lvImp.setHasFixedSize(true);
+                    lvImp.setLayoutManager(new LinearLayoutManager(getContext()));
+                    lvImp.setAdapter(adapter);
+
+
+                    adaptador_TotalesImpFactura adapter2 = new adaptador_TotalesImpFactura(lstItemTotalesImp);
+                    lvImpValores.setHasFixedSize(true);
+                    lvImpValores.setLayoutManager(new LinearLayoutManager(getContext()));
+                    lvImpValores.setAdapter(adapter2);
+
+
+                    txtTotalAPagar.setText( String.format("%.2f", viewModel.importetotal.getValue()));
+
                     TransitionManager.beginDelayedTransition(hiddenView, new AutoTransition());
                     hiddenView.setVisibility(View.VISIBLE);
                     arrow.setImageResource(R.drawable.ic_baseline_arrow_drop_down_24);
@@ -200,11 +271,10 @@ public class fragment_Factura extends Fragment {
         viewModel = new ViewModelProvider(requireActivity()).get(viewModelFacturacion.class);
         viewModel.getlstProductos().observe(getViewLifecycleOwner(), lstproducts -> {
             Double total=0.0;
-            for (clsProducto producto : lstproducts) {
-                    total+=producto.PVP;
+            for (clsItemFactura producto : lstproducts) {
+                    total+=producto.getSubTotalItem();
             }
-            lblTotalHead.setText(total.toString());
-            lblTotal.setText(total.toString());
+            lblTotalHead.setText(String.format("%.2f",total));
 
         });
     }

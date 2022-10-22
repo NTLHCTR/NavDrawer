@@ -128,7 +128,6 @@ public class fragment_encabezadoFactura extends Fragment
         });
 
         viewModel = new ViewModelProvider(requireActivity()).get(viewModelFacturacion.class);
-        //viewModel.setProductoinList(new clsProducto("Producto ","Bebidas",5000.0,10));
 
     }
 

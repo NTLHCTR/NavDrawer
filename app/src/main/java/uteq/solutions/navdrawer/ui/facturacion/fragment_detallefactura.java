@@ -1,5 +1,6 @@
 package uteq.solutions.navdrawer.ui.facturacion;
 
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -20,6 +21,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,6 +33,8 @@ import com.android.volley.Response;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.button.MaterialButtonToggleGroup;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -38,6 +42,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.w3c.dom.Text;
 
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -49,6 +54,7 @@ import uteq.solutions.navdrawer.helper.GlobalInfo;
 import uteq.solutions.navdrawer.helper.HTTPErrorResponseDialog;
 import uteq.solutions.navdrawer.helper.UIHelper;
 import uteq.solutions.navdrawer.model.clsCliente;
+import uteq.solutions.navdrawer.model.clsItemFactura;
 import uteq.solutions.navdrawer.model.clsListItem;
 import uteq.solutions.navdrawer.model.clsProducto;
 import uteq.solutions.navdrawer.ui.productos.fragment_addproductopart1;
@@ -58,17 +64,18 @@ import uteq.solutions.navdrawer.ui.productos.fragment_addproductopart2;
 public class fragment_detallefactura extends Fragment
         implements fragment_busqproducts.IBusqProductos, View.OnClickListener {
 
-    private SharedViewModel viewModel;
+    private viewModelFacturacion viewModel;
 
     Button btBuscar, btAgregar, btCancelar, btPMin, btPMax;
-    TextInputLayout  txtcantly, txtivaly, txtpvply, txtdescuentoly, txtdescpercly, txtcodly, txtpfinally;
-    TextInputEditText txtcod, txtdescuento, txtdescuentoporc, txtpvp, txtcant, txtiva, txtivaporc,
+    TextInputLayout  txtcantly, txtivaly, txticely, txtpvply, txtdescuentoly, txtdescpercly, txtcodly, txtpfinally;
+    TextInputEditText txtcod, txtdescuento, txtdescuentoporc, txtpvp, txtcant, txtiva, txtice, txtivaporc,
             txtdescripcion, txtpfinal;
     TextView lblSubTotal;
     MaterialButtonToggleGroup tgTipoPrecio;
+    RelativeLayout rlyICE;
 
     ProgressBar pb ;
-    clsProducto productoSeleccionado;
+    clsItemFactura productoSeleccionado;
 
 
 
@@ -101,11 +108,13 @@ public class fragment_detallefactura extends Fragment
         pb = (ProgressBar) root.findViewById(R.id.idLoadingPB);
         pb.setVisibility(View.GONE);
 
+        rlyICE = (RelativeLayout) root.findViewById(R.id.rlyICE);
         txtcod = (TextInputEditText) root.findViewById(R.id.txtDetFactCodProd);
         txtdescripcion = (TextInputEditText) root.findViewById(R.id.txtDetFacdesccripcion);
         txtcant = (TextInputEditText) root.findViewById(R.id.txtDetFacCant);
         txtpvp = (TextInputEditText) root.findViewById(R.id.txtDetFacPrecio);
         txtiva = (TextInputEditText) root.findViewById(R.id.txtDetFacIva);
+        txtice = (TextInputEditText) root.findViewById(R.id.txtDetFacICE);
         txtivaporc = (TextInputEditText) root.findViewById(R.id.txtDetFacIVAPerc);
         txtdescuento = (TextInputEditText) root.findViewById(R.id.txtDetFacDesc);
         txtdescuentoporc = (TextInputEditText) root.findViewById(R.id.txtDetFacDescPerc);
@@ -117,6 +126,7 @@ public class fragment_detallefactura extends Fragment
         txtpvply = (TextInputLayout) root.findViewById(R.id.lblDetFacPVP);
         txtdescuentoly = (TextInputLayout) root.findViewById(R.id.lblDetFacDescLy);
         txtivaly = (TextInputLayout) root.findViewById(R.id.lblDetFacIvaLy);
+        txticely = (TextInputLayout) root.findViewById(R.id.lblDetFacICELy);
         txtdescpercly = (TextInputLayout) root.findViewById(R.id.lblDetFacIvaLy);
         txtpfinally = (TextInputLayout) root.findViewById(R.id.lblDetFacPFinalLy);
         tgTipoPrecio = (MaterialButtonToggleGroup) root.findViewById(R.id.tgDetFacTipoPrecio);
@@ -140,6 +150,7 @@ public class fragment_detallefactura extends Fragment
         txtcant.setFilters(new InputFilter[] {new DecimalDigitsInputFilter(5,2)});
         txtpvp.setFilters(new InputFilter[] {new DecimalDigitsInputFilter(5,2)});
         txtiva.setFilters(new InputFilter[] {new DecimalDigitsInputFilter(5,2)});
+        txtice.setFilters(new InputFilter[] {new DecimalDigitsInputFilter(5,2)});
         txtdescuento.setFilters(new InputFilter[] {new DecimalDigitsInputFilter(5,2)});
         txtdescuentoporc.setFilters(new InputFilter[] {new DecimalDigitsInputFilter(5,2)});
 
@@ -151,6 +162,55 @@ public class fragment_detallefactura extends Fragment
         btBuscar.setOnClickListener(this);
 
         updateUIOnNew();
+
+        btAgregar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(productoSeleccionado!=null) {
+
+                    String resp=validaParametros();
+                    if(!resp.equals("")) {
+                        new MaterialAlertDialogBuilder(getContext())
+                                .setTitle("Error en los Parámetros")
+                                .setIcon(R.drawable.ic_baseline_error_24)
+                                .setMessage(resp)
+                                .setPositiveButton("Ok", null)
+                                .show();
+                    }else {
+
+                        productoSeleccionado.cantidad = Double.parseDouble(txtcant.getText().toString());
+                        productoSeleccionado.pvp = Double.parseDouble(txtpvp.getText().toString());
+                        productoSeleccionado.descuento = Double.parseDouble(txtdescuento.getText().toString());
+
+                        //Los vcódigos de IVA e ICE ya vienen asignados desde que se Buscó y Mostró el productos
+                        productoSeleccionado.iva_baseimponible = productoSeleccionado.getBaseImponibleItem();
+
+                        productoSeleccionado.iva_valor = Double.parseDouble(txtiva.getText().toString());
+                        if (productoSeleccionado.ice_codigo > 0) {
+                            productoSeleccionado.ice_baseimponible = productoSeleccionado.getBaseImponibleItem();
+                            productoSeleccionado.ice_valor = Double.parseDouble(txtice.getText().toString());
+                        }
+
+                        viewModel = new ViewModelProvider(requireActivity()).get(viewModelFacturacion.class);
+                        viewModel.setProductoinList(productoSeleccionado);
+
+
+
+                        Snackbar snackbar = Snackbar.make(view, "Producto agregado..", Snackbar.LENGTH_LONG);
+                        snackbar.setAction("Deshacer", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Toast.makeText(getContext(),"Elima",Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                        snackbar.setActionTextColor(Color.YELLOW);
+                        snackbar.show();
+
+                    }
+                }
+
+            }
+        });
 
         txtcod.setOnKeyListener(new View.OnKeyListener() {
             @Override
@@ -164,6 +224,29 @@ public class fragment_detallefactura extends Fragment
             }
         });
 
+        txtice.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View view, int i, KeyEvent keyEvent) {
+                if(txtice.getText().toString().equals("")){
+                    txticely.setError("Error");
+                }else {
+                    try {
+                        Double ice = Double.parseDouble(txtice.getText().toString());
+                        if (ice < 0) {
+                            txticely.setError("Error");
+                        } else {
+                            txticely.setError(null);
+                        }
+                    }  catch (Exception e){
+                        txticely.setError("Error");
+                    }
+                }
+                validaCalculaPFinal();
+                reCalcularTotales();
+                return false;
+            }
+        });
+
 
         txtcant.setOnKeyListener(new View.OnKeyListener() {
             @Override
@@ -171,11 +254,16 @@ public class fragment_detallefactura extends Fragment
                 if(txtcant.getText().toString().equals("")){
                     txtcantly.setError("Error");
                 }else {
-                    Double Cant = Double.parseDouble(txtcant.getText().toString());
-                    if (Cant <= 0) {
+
+                    try {
+                        Double Cant = Double.parseDouble(txtcant.getText().toString());
+                        if (Cant <= 0) {
+                            txtcantly.setError("Error");
+                        } else {
+                            txtcantly.setError(null);
+                        }
+                    }catch (Exception e){
                         txtcantly.setError("Error");
-                    }else{
-                        txtcantly.setError(null);
                     }
                 }
                 validaCalculaIVA();
@@ -191,11 +279,15 @@ public class fragment_detallefactura extends Fragment
                 if(txtpvp.getText().toString().equals("")) {
                     txtpvply.setError("Error");
                 }else {
-                    Double PVP = Double.parseDouble(txtpvp.getText().toString());
-                    if (PVP <= 0) {
+                    try {
+                        Double PVP = Double.parseDouble(txtpvp.getText().toString());
+                        if (PVP <= 0) {
+                            txtpvply.setError("Error");
+                        } else {
+                            txtpvply.setError(null);
+                        }
+                    }catch (Exception e){
                         txtpvply.setError("Error");
-                    }else{
-                        txtpvply.setError(null);
                     }
                 }
                 calculaDescFromPVP();
@@ -217,18 +309,23 @@ public class fragment_detallefactura extends Fragment
                         if(txtdescuentoporc.getText().toString().equals("")) {
                             txtdescpercly.setError("Error"); txtdescuentoly.setError("Error");
                          }else {
-                            desc = Double.parseDouble(txtdescuentoporc.getText().toString());
-                            if (desc < 0 || desc >= 100) {
-                                txtdescpercly.setError("Error"); txtdescuentoly.setError("Error");
-                            } else {
-                                txtdescpercly.setError(null);
-                                descd = PVP * desc / 100;
-                                if (descd < 0 || descd >= PVP) {
+                            try{
+                                desc = Double.parseDouble(txtdescuentoporc.getText().toString());
+                                if (desc < 0 || desc >= 100) {
+                                    txtdescpercly.setError("Error");
                                     txtdescuentoly.setError("Error");
                                 } else {
-                                    txtdescuento.setText(String.format("%.2f", descd));
-                                    txtdescuentoly.setError(null);
+                                    txtdescpercly.setError(null);
+                                    descd = PVP * desc / 100;
+                                    if (descd < 0 || descd >= PVP) {
+                                        txtdescuentoly.setError("Error");
+                                    } else {
+                                        txtdescuento.setText(String.format("%.2f", descd));
+                                        txtdescuentoly.setError(null);
+                                    }
                                 }
+                            }catch (Exception e){
+                                txtdescpercly.setError("Error"); txtdescuentoly.setError("Error");
                             }
                         }
                 }else{
@@ -248,24 +345,31 @@ public class fragment_detallefactura extends Fragment
                 txtdescuentoporc.setText("");
 
                 if(txtpvply.getError()==null){
-                    Double PVP= Double.parseDouble(txtpvp.getText().toString());
-                    Double desc, descd;
-                    if(txtdescuento.getText().toString().equals("")) {
-                        txtdescpercly.setError("Error"); txtdescuentoly.setError("Error");
-                    }else {
-                        descd = Double.parseDouble(txtdescuento.getText().toString());
-                        if (descd < 0 || descd >= PVP) {
-                            txtdescpercly.setError("Error"); txtdescuentoly.setError("Error");
+                    try {
+                        Double PVP = Double.parseDouble(txtpvp.getText().toString());
+                        Double desc, descd;
+                        if (txtdescuento.getText().toString().equals("")) {
+                            txtdescpercly.setError("Error");
+                            txtdescuentoly.setError("Error");
                         } else {
-                            txtdescuentoly.setError(null);
-                            desc = descd/PVP * 100;
-                            if (desc < 0 || desc >= 100) {
+                            descd = Double.parseDouble(txtdescuento.getText().toString());
+                            if (descd < 0 || descd >= PVP) {
                                 txtdescpercly.setError("Error");
+                                txtdescuentoly.setError("Error");
                             } else {
-                                txtdescuentoporc.setText(String.format("%.2f", desc));
-                                txtdescpercly.setError(null);
+                                txtdescuentoly.setError(null);
+                                desc = descd / PVP * 100;
+                                if (desc < 0 || desc >= 100) {
+                                    txtdescpercly.setError("Error");
+                                } else {
+                                    txtdescuentoporc.setText(String.format("%.2f", desc));
+                                    txtdescpercly.setError(null);
+                                }
                             }
                         }
+
+                    }catch (Exception e){
+                        txtdescuentoly.setError("Error");  txtdescpercly.setError("Error");
                     }
                 }else{
                     txtdescuentoly.setError("Error");  txtdescpercly.setError("Error");
@@ -308,9 +412,6 @@ public class fragment_detallefactura extends Fragment
                 updateUIOnNew();
             }
         });
-        //viewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
-       // viewModel.setCosto(Double.parseDouble(editText.getText().toString()));
-       // viewModel.setTexto("Campos Texto ID: " + editText.getText().toString());
 
     }
 
@@ -319,6 +420,7 @@ public class fragment_detallefactura extends Fragment
         txtiva.setText(""); txtivaporc.setText("");
         txtpfinal.setText("");
         lblSubTotal.setText("");
+        txtice.setText("");   txtice.setEnabled(false); rlyICE.setVisibility(View.GONE);
 
         txtcod.setText(""); txtcod.setFocusable(true); txtcod.requestFocus();
 
@@ -336,6 +438,13 @@ public class fragment_detallefactura extends Fragment
 
     private void showProduct(clsProducto jsonProducto){
         try {
+
+            productoSeleccionado = new clsItemFactura(jsonProducto.ID, jsonProducto.codigo,jsonProducto.descripcion,
+                    1,jsonProducto.preciocompra,jsonProducto.PVP, jsonProducto.DESC,
+                    jsonProducto.codigoImpuestoIVA,0,0,
+                    jsonProducto.codigoImpuestoICE,0,0,
+                    jsonProducto.ImpuestoDescr);
+
             txtcant.setText("1");
             txtdescripcion.setText(jsonProducto.descripcion);
             Double pvp= jsonProducto.PVP;
@@ -355,16 +464,28 @@ public class fragment_detallefactura extends Fragment
             txtivaporc.setText(String.format("%.2f",iva));
             txtiva.setText(String.format("%.2f",SubTotal*iva/100));
 
+
+            txtice.setText("0.00");
+            if(jsonProducto.codigoImpuestoICE>0){
+                rlyICE.setVisibility(View.VISIBLE);
+                txticely.setHint(jsonProducto.ImpuestoICEDescr);
+                txtice.setEnabled(true);
+            }else{
+                rlyICE.setVisibility(View.GONE);
+                txtice.setEnabled(false);
+            }
+
             txtpfinal.setText(String.format("%.2f",SubTotal+(SubTotal*iva/100)));
             lblSubTotal.setText("Subtotal: $" + String.format("%.2f",SubTotal+(SubTotal*iva/100)));
-
 
             txtcant.setEnabled(true); txtpvp.setEnabled(true);
             txtdescuento.setEnabled(true); txtdescuentoporc.setEnabled(true);
             tgTipoPrecio.setEnabled(true);
 
+
             txtcantly.setError(""); txtpvply.setError(""); txtdescuentoly.setError("");
             txtdescpercly.setError(""); txtivaly.setError(""); txtpfinally.setError("");
+            txticely.setError("");
 
             btAgregar.setEnabled(true);
 
@@ -406,6 +527,33 @@ public class fragment_detallefactura extends Fragment
         return true;
     }
 
+    private String validaParametros(){
+        if(txtcantly.getError()!=null || txtpvply.getError()!=null ||
+                txtdescuentoly.getError()!=null  || txtdescpercly.getError()!=null
+                || txtivaly.getError()!=null ) return "Error en Valores";
+
+        Double Cant,PVP,IVA,Desc, ICE=0.0;
+        if(rlyICE.getVisibility()==View.VISIBLE){
+            if(txticely.getError()!=null)  return "Error en Valor ICE";
+        }
+
+        try {
+            Cant = Double.parseDouble(txtcant.getText().toString());
+            PVP = Double.parseDouble(txtpvp.getText().toString());
+            Desc = Double.parseDouble(txtdescuento.getText().toString());
+            IVA = Double.parseDouble(txtiva.getText().toString());
+            if (PVP <= 0) return "PVP debe ser mayor a 0";
+            if (Desc < 0) return "Descuento debe ser positivo";
+            if (Desc >= PVP) return "Descuento debe ser menor que el PVP";
+            if (Cant <= 0) return "Cantidad debe ser mayor a 0";
+            if (IVA < 0) return "IVA debe ser positivo";
+            return "";
+        } catch (Exception e){
+            return e.getMessage();
+        }
+
+
+    }
     private void reCalcularTotales(){
 
         Double Cant,PVP,IVA,Desc;
@@ -415,25 +563,52 @@ public class fragment_detallefactura extends Fragment
                 txtdescuentoly.getError()!=null  || txtdescpercly.getError()!=null
                 || txtivaly.getError()!=null ) return;
 
-        Cant = Double.parseDouble(txtcant.getText().toString());
-        PVP = Double.parseDouble(txtpvp.getText().toString());
-        Desc= Double.parseDouble(txtdescuento.getText().toString());
-        IVA= Double.parseDouble(txtiva.getText().toString());
+        try{
+            Cant = Double.parseDouble(txtcant.getText().toString());
+            PVP = Double.parseDouble(txtpvp.getText().toString());
+            Desc= Double.parseDouble(txtdescuento.getText().toString());
+            IVA= Double.parseDouble(txtiva.getText().toString());
 
-        lblSubTotal.setText("SubTotal: $"  + String.format("%.2f",Cant * (PVP-Desc+IVA)));
+            Double ICE=0.0;
+            if(rlyICE.getVisibility()==View.VISIBLE){
+                if(txticely.getError()==null){
+                    ICE = Double.parseDouble(txtice.getText().toString());
+                    lblSubTotal.setText("SubTotal: $"  + String.format("%.2f",Cant * (PVP-Desc+IVA+ICE)));
+                }
+            }else{
+                lblSubTotal.setText("SubTotal: $"  + String.format("%.2f",Cant * (PVP-Desc+IVA)));
+            }
+        } catch (Exception e){
+
+        }
     }
 
     private void validaCalculaPFinal(){
         txtpfinal.setText("");
 
         if(txtpvply.getError()==null && txtdescuentoly.getError()==null && txtivaly.getError()==null ){
-            Double PVP= Double.parseDouble(txtpvp.getText().toString());
-            Double DESC= Double.parseDouble(txtdescuento.getText().toString());
-            Double IVA = Double.parseDouble(txtiva.getText().toString());
+           try {
+               Double PVP = Double.parseDouble(txtpvp.getText().toString());
+               Double DESC = Double.parseDouble(txtdescuento.getText().toString());
+               Double IVA = Double.parseDouble(txtiva.getText().toString());
 
-            txtpfinal.setText(String.format("%.2f", PVP-DESC+IVA));
-            txtpfinally.setError(null);
+               Double ICE = 0.0;
+               if (rlyICE.getVisibility() == View.VISIBLE) {
+                   if (txticely.getError() == null) {
+                       ICE = Double.parseDouble(txtice.getText().toString());
+                       txtpfinal.setText(String.format("%.2f", PVP - DESC + IVA + ICE));
+                       txtpfinally.setError(null);
+                   } else {
+                       txtpfinally.setError("Error");
+                   }
+               } else {
+                   txtpfinal.setText(String.format("%.2f", PVP - DESC + IVA));
+                   txtpfinally.setError(null);
+               }
 
+           } catch (Exception e){
+               txtpfinally.setError("Error");
+           }
         }else{
             txtpfinally.setError("Error");
         }
@@ -443,12 +618,16 @@ public class fragment_detallefactura extends Fragment
         txtdescuento.setText("");
 
         if(txtpvply.getError()==null && txtdescpercly.getError()==null ){
-            Double PVP= Double.parseDouble(txtpvp.getText().toString());
-            Double DESC= Double.parseDouble(txtdescuentoporc.getText().toString());
+            try {
+                Double PVP = Double.parseDouble(txtpvp.getText().toString());
+                Double DESC = Double.parseDouble(txtdescuentoporc.getText().toString());
 
-            txtdescuento.setText(String.format("%.2f", PVP*DESC/100));
-            txtdescuentoly.setError(null);
+                txtdescuento.setText(String.format("%.2f", PVP * DESC / 100));
+                txtdescuentoly.setError(null);
 
+            }catch (Exception e){
+                txtdescuentoly.setError("Error");
+            }
         }else{
             txtdescuentoly.setError("Error");
         }
@@ -458,24 +637,28 @@ public class fragment_detallefactura extends Fragment
         txtiva.setText("");
 
         if(txtpvply.getError()==null && txtdescuentoly.getError()==null ){
-            Double PVP= Double.parseDouble(txtpvp.getText().toString());
-            Double DESC= Double.parseDouble(txtdescuento.getText().toString());
-            Double iva, ivad;
-            if(txtivaporc.getText().toString().equals("")) {
-                txtivaly.setError("Error");
-            }else {
-                iva = Double.parseDouble(txtivaporc.getText().toString());
-                if (iva < 0 || iva >= 100) {
+            try {
+                Double PVP = Double.parseDouble(txtpvp.getText().toString());
+                Double DESC = Double.parseDouble(txtdescuento.getText().toString());
+                Double iva, ivad;
+                if (txtivaporc.getText().toString().equals("")) {
                     txtivaly.setError("Error");
                 } else {
-                    ivad = (PVP  - DESC)* iva / 100;
-                    if (ivad < 0) {
+                    iva = Double.parseDouble(txtivaporc.getText().toString());
+                    if (iva < 0 || iva >= 100) {
                         txtivaly.setError("Error");
                     } else {
-                        txtiva.setText(String.format("%.2f", ivad));
-                        txtivaly.setError(null);
+                        ivad = (PVP - DESC) * iva / 100;
+                        if (ivad < 0) {
+                            txtivaly.setError("Error");
+                        } else {
+                            txtiva.setText(String.format("%.2f", ivad));
+                            txtivaly.setError(null);
+                        }
                     }
                 }
+            }catch (Exception e){
+                txtivaly.setError("Error");
             }
         }else{
             txtivaly.setError("Error");
