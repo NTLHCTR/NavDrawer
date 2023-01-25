@@ -2,7 +2,7 @@ package uteq.solutions.navdrawer.helper;
 
 public class GlobalInfo {
 
-    public static final String Token="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZHVzciI6OSwiZW1haWwiOiJjemFtYnJhbm9AdXRlcS5lZHUuZWMiLCJpYXQiOjE2NjYzNjE0MDcsImV4cCI6MTY2NjcyMTQwN30.qJFkxrRDyuNyf6AXl2PsSB7fXTBYFraMAn7w9kn4rKI";
+    public static final String Token="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZHVzciI6OSwiZW1haWwiOiJjemFtYnJhbm9AdXRlcS5lZHUuZWMiLCJpYXQiOjE2NzIzMzY4NTIsImV4cCI6MTY3MjY5Njg1Mn0.MnXThBtt2gOulPMrF8zGDvmqcrxLGno8hUefhSUnbdA";
 
     public static final String URL_ActualizaEstadoCliente="https://api.uealecpeterson.net/public/clientes/setestado";
     public static final String URL_ListaClientes="https://api.uealecpeterson.net/public/clientes/search";
